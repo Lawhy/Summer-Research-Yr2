@@ -1,27 +1,69 @@
-import itertools
 import csv
 import re
 import numpy as np
 import time
 
-eng_col = ['^', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q',
-           'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '\'', '$']
+# loading the names of classes for data alignment check (better visualisation)
+eng_cls = ['^', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n',
+           'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '\'', '$']
+with open('chi_char.txt', 'r', encoding='UTF-8-sig') as cc:
+    chi_cls = [chi.replace('\n', '') for chi in cc.readlines()]
+    chi_cls = ['^'] + chi_cls + ['$']
+    # han = r'[\u4E00-\u9FA5]'
+    # assert bool(re.match(han, chi) for chi in chi_cls)
+
+
+def feature_vector_all(filename, classes, ipa_feature=False):
+
+        cl_left = [cl for cl in classes if not cl == '$']  # '$' cannot appear in the left context
+        cl_right = [cl for cl in classes if not cl == '^']  # '^' cannot appear in the right context
+        ipa_chars = []  # initialize ipa data as an empty list
+
+        if ipa_feature:
+            print('Enable IPA features!')
+            ipa = load_ipa()
+            ipa_cls = ipa['flattened_classes']
+            ipa_chars = ipa['ordered_contents']
+
+        with open(filename, 'r', encoding='UTF-8-sig') as data:
+            dictionary = [word.replace('\n', '') for word in data.readlines()]
+            print(str(len(dictionary)) + ' data are loaded!')
+            print('The first three data are: ' + str(dictionary[0:3]))
+
+        with open('feature_vectors.csv', 'w+', encoding='UTF-8', newline='') as output:
+            total = 0
+            writer = csv.writer(output)
+            cl_names = cl_left + cl_right
+            if ipa_feature:
+                cl_names += ipa_cls
+                cl_names += ipa_cls
+            cl_names.append('Char')
+            cl_names.append('Word')
+            cl_names.append('Cluster')
+            writer.writerow(cl_names)
+            for word in dictionary:
+                count = 0
+                feature_vectors = feature_vector_unigram(word, cl_left, cl_right, ipa_chars)
+                for vec in feature_vectors:
+                    writer.writerow(vec)
+                    total += 1
+                    count += 1
+                print('There are ' + str(count) + ' characters in the word: ' + word)
+            print('Number of feature vectors generated: ' + str(total))
+
+
+
+
 
 
 # uni-gram feature_vector generator for both Chinese and English
-def feature_vector_unigram(ori_word, cl_left, cl_right, ipa=[]):
+def feature_vector_unigram(ori_word, cl_left, cl_right, ipa_chars):
     # prepare data to be fed to Seq2Seq model
     assert len(cl_left) == len(cl_right)
     # cls = cl_left + cl_right + ['Char'] + ['Word'] + ['Class']
 
     cl_left = np.asmatrix(cl_left)
     cl_right = np.asmatrix(cl_right)
-
-    if not ipa == []:
-        ipa_data = load_ipa()
-        print('Enable IPA features!')
-        ipa_cls = ipa_data['flattened_classes']
-        ipa_chars = ipa_data['ordered_contents']
 
     word = '^' + ori_word.lower() + '$'  # add the ^^ and $$ for simpler calculation
     rows = []
@@ -38,8 +80,8 @@ def feature_vector_unigram(ori_word, cl_left, cl_right, ipa=[]):
             right = [int(boolean) for boolean in right.tolist()[0]]
 
             row = left + right
-
-            if not ipa == []:
+            assert sum(row) == 2
+            if not ipa_chars == []:
                 num_ipa_classes = len(ipa_chars)
                 left_ipa = [0] * num_ipa_classes
                 right_ipa = [0] * num_ipa_classes
@@ -47,11 +89,13 @@ def feature_vector_unigram(ori_word, cl_left, cl_right, ipa=[]):
                     options = ipa_chars[j]
                     if left_unigram in options:
                         left_ipa[j] = 1
-                        print(str(i) + ' left IPA is ' + str(ipa_cls[j]))
+                        # print(str(i) + ' left IPA is ' + str(ipa_cls[j]))
                     if right_unigram in options:
                         right_ipa[j] = 1
-                        print(str(i) + ' right IPA is ' + str(ipa_cls[j]))
+                        # print(str(i) + ' right IPA is ' + str(ipa_cls[j]))
                 row = row + left_ipa + right_ipa
+                if not len(ori_word) == 1:
+                    assert sum(row) >= 3
 
             row.append(word[i])
             row.append(ori_word)
@@ -64,7 +108,7 @@ def feature_vector_unigram(ori_word, cl_left, cl_right, ipa=[]):
     #         cl_names += ipa_cls
     #     cl_names.append('Char')
     #     cl_names.append('Word')
-    #     cl_names.append('Class')
+    #     cl_names.append('Cluster')
     #     wr.writerow(cl_names)
     #     for row in rows:
     #         wr.writerow(row)
@@ -94,10 +138,10 @@ def flatten_table(table_name):
                         flattened_classes.append(cur_class)
                         ordered_contents.append(row[i])
 
-    # with open('flatten_table.csv', 'w+', encoding='UTF-8', newline='') as ft:
-    #     writer = csv.writer(ft)
-    #     writer.writerow(flatten_classes)
-    #     writer.writerow(ordered_contents)
+    with open('IPA_table_flatten.csv', 'w+', encoding='UTF-8', newline='') as ft:
+        writer = csv.writer(ft)
+        writer.writerow(flattened_classes)
+        writer.writerow(ordered_contents)
     assert len(flattened_classes) == len(ordered_contents)
     return {
         'flattened_classes': flattened_classes,
@@ -121,4 +165,21 @@ def load_ipa():
         }
 
 
-# feature_vector_unigram('Amy', eng_col)
+def chi_char(s):
+    chi_set = set()
+    chi = r'[\u4E00-\u9FA5]'
+    with open(s + '.txt', 'r', encoding='UTF-8-sig') as f:
+        lines = f.readlines()
+        print(lines)
+    for line in lines:
+        for char in line:
+            if bool(re.match(chi, char)):
+                chi_set.add(char)
+    with open('chi_char.txt', 'w+', encoding='UTF-8') as output:
+        for char in chi_set:
+            output.write(char + '\n')
+    return chi_set
+
+
+# flatten_table('IPA_Table_1.0')
+# feature_vector_all('en2chi_tra_chi.txt', chi_cls, ipa_feature=True)

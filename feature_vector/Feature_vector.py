@@ -181,5 +181,6 @@ def chi_char(s):
     return chi_set
 
 
-# flatten_table('IPA_Table_1.0')
-# feature_vector_all('en2chi_tra_chi.txt', chi_cls, ipa_feature=True)
+if __name__ == "__main__":
+    flatten_table('IPA_Table_1.0') # this line should only be executed if there is some change made in the IPA_Table
+    # feature_vector_all('en2chi_tra_chi.txt', chi_cls, ipa_feature=True)

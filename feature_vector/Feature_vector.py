@@ -53,10 +53,6 @@ def feature_vector_all(filename, classes, ipa_feature=False):
             print('Number of feature vectors generated: ' + str(total))
 
 
-
-
-
-
 # uni-gram feature_vector generator for both Chinese and English
 def feature_vector_unigram(ori_word, cl_left, cl_right, ipa_chars):
     # prepare data to be fed to Seq2Seq model

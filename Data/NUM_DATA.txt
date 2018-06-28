@@ -1,0 +1,8 @@
+57682_out 159_sup 157_space
+57998_in_total
+57948_no_dup
+46358 training en2chi/eng/chi
+5794 evaluation
+5796 testing
+435 Chinese characters in training dataset
+

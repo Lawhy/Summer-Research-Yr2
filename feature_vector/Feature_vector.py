@@ -6,11 +6,12 @@ import time
 # loading the names of classes for data alignment check (better visualisation)
 eng_cls = ['^', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n',
            'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '\'', '$']
-with open('chi_char.txt', 'r', encoding='UTF-8-sig') as cc:
+with open('./data/chi_char.txt', 'r', encoding='UTF-8-sig') as cc:
     chi_cls = [chi.replace('\n', '') for chi in cc.readlines()]
+    han = r'^[\u4E00-\u9FA5]$'
+    for chi in chi_cls:
+        assert bool(re.match(han, chi))
     chi_cls = ['^'] + chi_cls + ['$']
-    # han = r'[\u4E00-\u9FA5]'
-    # assert bool(re.match(han, chi) for chi in chi_cls)
 
 
 def feature_vector_all(filename, classes, ipa_feature=False):
@@ -181,6 +182,6 @@ def chi_char(s):
     return chi_set
 
 
-if __name__ == "__main__":
-    flatten_table('IPA_Table_1.0') # this line should only be executed if there is some change made in the IPA_Table
+# if __name__ == "__main__":
+#     flatten_table('IPA_Table_1.0') # this line should only be executed if there is some change made in the IPA_Table
     # feature_vector_all('en2chi_tra_chi.txt', chi_cls, ipa_feature=True)

@@ -4,5 +4,6 @@
 46358 training en2chi/eng/chi
 5794 evaluation
 5796 testing
-435 Chinese characters in training dataset
+434 distinct Chinese characters in training dataset
+408 IPA features (before smoothing)
 

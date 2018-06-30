@@ -1,2 +1,8 @@
-Chinese: 149224
-English: 319664
+Chinese_tra: 149224
+English_tra: 319664
+Deleted columns number after smoothing for Chinese: 362
+
+Chinese_eva: 18563
+Chinese_tst: 18753
+English_eva: 39726
+English_tst: 39962

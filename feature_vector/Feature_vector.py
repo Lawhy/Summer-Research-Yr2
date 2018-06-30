@@ -49,7 +49,7 @@ def feature_vector_all(filename, classes, ipa_feature=False):
                     writer.writerow(vec)
                     total += 1
                     count += 1
-                print('There are ' + str(count) + ' characters in the word: ' + word)
+                # print('There are ' + str(count) + ' characters in the word: ' + word)
             print('Number of feature vectors generated: ' + str(total))
 
 
@@ -77,7 +77,11 @@ def feature_vector_unigram(ori_word, cl_left, cl_right, ipa_chars):
             right = [int(boolean) for boolean in right.tolist()[0]]
 
             row = left + right
-            assert sum(row) == 2
+            if 1 not in left:
+                print(left_unigram + ' is an unknown character in the training dataset.')
+            if 1 not in right:
+                print(right_unigram + ' is an unknown character in the training dataset.')
+
             if not ipa_chars == []:
                 num_ipa_classes = len(ipa_chars)
                 left_ipa = [0] * num_ipa_classes
@@ -91,8 +95,8 @@ def feature_vector_unigram(ori_word, cl_left, cl_right, ipa_chars):
                         right_ipa[j] = 1
                         # print(str(i) + ' right IPA is ' + str(ipa_cls[j]))
                 row = row + left_ipa + right_ipa
-                if not len(ori_word) == 1:
-                    assert sum(row) >= 3
+                # if not len(ori_word) == 1:
+                #     assert sum(row) >= 3
 
             row.append(word[i])
             row.append(ori_word)
@@ -178,6 +182,13 @@ def chi_char(s):
     return chi_set
 
 
-# if __name__ == "__main__":
-#     flatten_table('IPA_Table_1.0') # this line should only be executed if there is some change made in the IPA_Table
-    # feature_vector_all('en2chi_tra_chi.txt', chi_cls, ipa_feature=True)
+if __name__ == "__main__":
+    # flatten_table('IPA_Table_1.0')  # this line should only be executed if there is some change made in the IPA_Table
+    # The following code can generate the feature vectors
+    # Run each line separately, and change the name of output file to 'fv_*' format for clustering purpose.
+    feature_vector_all('./data/en2chi_tra_chi.txt', chi_cls, ipa_feature=True)
+    # feature_vector_all('./data/en2chi_eva_chi.txt', chi_cls, ipa_feature=True)
+    # feature_vector_all('./data/en2chi_tst_chi.txt', chi_cls, ipa_feature=True)
+    # feature_vector_all('./data/en2chi_tra_eng.txt', eng_cls, ipa_feature=False)
+    # feature_vector_all('./data/en2chi_eva_eng.txt', eng_cls, ipa_feature=False)
+    # feature_vector_all('./data/en2chi_tst_eng.txt', eng_cls, ipa_feature=False)

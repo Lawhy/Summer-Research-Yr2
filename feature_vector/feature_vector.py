@@ -183,12 +183,12 @@ def chi_char(s):
 
 
 if __name__ == "__main__":
-    # flatten_table('IPA_Table_1.0')  # this line should only be executed if there is some change made in the IPA_Table
+    flatten_table('IPA_Table_1.0')  # this line should only be executed if there is some change made in the IPA_Table
     # The following code can generate the feature vectors
     # Run each line separately, and change the name of output file to 'fv_*' format for clustering purpose.
-    feature_vector_all('./data/en2chi_tra_chi.txt', chi_cls, ipa_feature=True)
-    # feature_vector_all('./data/en2chi_eva_chi.txt', chi_cls, ipa_feature=True)
+    # feature_vector_all('./data/en2chi_tra_chi.txt', chi_cls, ipa_feature=True)
+    # feature_vector_all('./data/en2chi_dev_chi.txt', chi_cls, ipa_feature=True)
     # feature_vector_all('./data/en2chi_tst_chi.txt', chi_cls, ipa_feature=True)
     # feature_vector_all('./data/en2chi_tra_eng.txt', eng_cls, ipa_feature=False)
-    # feature_vector_all('./data/en2chi_eva_eng.txt', eng_cls, ipa_feature=False)
+    # feature_vector_all('./data/en2chi_dev_eng.txt', eng_cls, ipa_feature=False)
     # feature_vector_all('./data/en2chi_tst_eng.txt', eng_cls, ipa_feature=False)

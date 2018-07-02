@@ -90,7 +90,7 @@ def clustering_kmeans(lan, n_clusters):
         # cls = cls[0].tolist()
 
         # load eva and tst data for prediction
-        eva_data = load_fv('chi_eva')
+        eva_data = load_fv('chi_dev')
         eva_fvs = eva_data['fvs']
         eva_fvs = np.delete(eva_fvs, col_index_to_be_removed, axis=1)  # smooth evaluation matrix
         eva_chars = eva_data['chars']
@@ -135,7 +135,7 @@ def clustering_kmeans(lan, n_clusters):
                 output.write(cur_labelled_word + '\n')
                 cur_labelled_word = []
     # form labelled evaluation dataset
-    with open('en2chi_eva_' + lan + '_' + str(n_clusters) + 'cls.txt', 'w+', encoding='UTF-8') as op_eva:
+    with open('en2chi_dev_' + lan + '_' + str(n_clusters) + 'cls.txt', 'w+', encoding='UTF-8') as op_eva:
         cur_labelled_word = []
         for i in range(len(eva_chars)):
             cur_char = eva_chars[i]
@@ -183,6 +183,6 @@ def clustering_kmeans(lan, n_clusters):
 
 
 if __name__ == '__main__':
-    clustering_kmeans('chi', 2)
+    clustering_kmeans('chi', 15)
 
 

@@ -1,0 +1,8 @@
+data:
+  eval_features_file: /disk/ocean/lhe/OpenNMT-tf/baseline/en2chi_dev_eng.txt
+  eval_labels_file: /disk/ocean/lhe/OpenNMT-tf/baseline/en2chi_dev_chi.txt
+  source_words_vocabulary: /disk/ocean/lhe/OpenNMT-tf/baseline/vocab/en2chi_tra_eng_vocab.txt
+  target_words_vocabulary: /disk/ocean/lhe/OpenNMT-tf/baseline/vocab/en2chi_tra_chi_vocab.txt
+  train_features_file: /disk/ocean/lhe/OpenNMT-tf/baseline/en2chi_tra_eng.txt
+  train_labels_file: /disk/ocean/lhe/OpenNMT-tf/baseline/en2chi_tra_chi.txt
+model_dir: /disk/ocean/lhe/OpenNMT-tf/en2chi_models/baseline

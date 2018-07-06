@@ -1,8 +1,0 @@
-data:
-  eval_features_file: /disk/ocean/lhe/OpenNMT-tf/5_clusters/en2chi_dev_eng_5cls.txt
-  eval_labels_file: /disk/ocean/lhe/OpenNMT-tf/5_clusters/en2chi_dev_chi_5cls.txt
-  source_words_vocabulary: /disk/ocean/lhe/OpenNMT-tf/5_clusters_vocab/en2chi_tra_eng_5cls_vocab.txt
-  target_words_vocabulary: /disk/ocean/lhe/OpenNMT-tf/5_clusters_vocab/en2chi_tra_chi_5cls_vocab.txt
-  train_features_file: /disk/ocean/lhe/OpenNMT-tf/5_clusters/en2chi_tra_eng_5cls.txt
-  train_labels_file: /disk/ocean/lhe/OpenNMT-tf/5_clusters/en2chi_tra_chi_5cls.txt
-model_dir: /disk/ocean/lhe/OpenNMT-tf/en2chi_models/5cls/exp_2

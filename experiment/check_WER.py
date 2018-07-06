@@ -9,7 +9,7 @@ def exp_result(filename):
     with open(filename + '.txt', 'r', encoding='UTF-8-sig') as f:
         lines = f.readlines()
 
-    with open('en2chi_tst.txt', 'r', encoding='UTF-8-sig') as tst:
+    with open('en2chi_tst_chi_5cls.txt', 'r', encoding='UTF-8-sig') as tst:
         answers = tst.readlines()
 
     assert len(lines) == len(answers)
@@ -17,8 +17,11 @@ def exp_result(filename):
     count_chars = 0
     count_CER = 0
     count_WER = 0
+    num = 0
 
     for i in range(len(lines)):
+        if lines[i] == answers[i]:
+            num += 1
         predict = re.findall(pa, lines[i])
         answer = re.findall(pa, answers[i])
         # count CER
@@ -39,6 +42,7 @@ def exp_result(filename):
 
     w_acc = count_WER/len(lines)
     c_acc = count_CER/count_chars
+    print('WER with clusters: ' + str(1 - num/len(lines)))
     print('WER: ' + str(1 - w_acc))
     print('CER: ' + str(1 - c_acc))
     return {
@@ -72,4 +76,5 @@ def extract(filename):
             openg.write(weng + '\n')
 
 
-exp_result('result/5cls/result_e1')
+extract('en2chi_tst')
+# exp_result('result/5cls/result_e1')

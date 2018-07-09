@@ -1,0 +1,9 @@
+data:
+  train_features_file: /disk/ocean/lhe/en2chi/Data/2cls/en2chi_tra_eng_2cls.txt
+  train_labels_file: /disk/ocean/lhe/en2chi/Data/2cls/en2chi_tra_chi_2cls.txt
+  eval_features_file: /disk/ocean/lhe/en2chi/Data/2cls/en2chi_dev_eng_2cls.txt
+  eval_labels_file: /disk/ocean/lhe/en2chi/Data/2cls/en2chi_dev_chi_2cls.txt
+  source_words_vocabulary: /disk/ocean/lhe/en2chi/Vocab/2cls/eng.txt
+  target_words_vocabulary: /disk/ocean/lhe/en2chi/Vocab/2cls/chi.txt
+
+model_dir: /disk/ocean/lhe/en2chi/NMT_models/2cls

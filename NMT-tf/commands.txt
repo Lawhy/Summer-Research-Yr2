@@ -1,0 +1,20 @@
+Infer command:
+
+onmt-main infer 
+--config /disk/ocean/lhe/en2chi/config/c--/baseline.yml /disk/oce an/lhe/en2chi/config/para.yml 
+--features_file /disk/ocean/lhe/en2chi/Data/2cls/en2chi_dev_eng_2cls.tx t --predictions_file /disk/ocean/lhe/en2chi/result/temp/2.txt
+
+onmt-main infer --config /disk/ocean/lhe/en2chi/config/NMT_large/low_lr.yml /d isk/ocean/lhe/en2chi/config/NMT_large/15cls.yml --features_file /disk/ocean/lhe/en2chi/Data/15cls/en2c hi_dev_eng_15cls.txt --predictions_file /disk/ocean/lhe/en2chi/result/result_large/15cls_dev.txt
+
+Train command:
+onmt-main train_and_eval --model_type NMTBig --config /disk/ocean/lhe/en2chi/config /c+-/5cls.yml /disk/ocean/lhe/en2chi/config/para.yml
+
+WER command:
+wer ANSWERS PREDCITIONS
+wer /disk/ocean/lhe/en2chi/Data/baseline/en2chi_dev_chi.txt 2cls_dev_18000_ori.txt
+
+Vocab:
+onmt-build-vocab --size 50000 --save_vocab /disk/ocean/lhe/en2chi/Vocab/15cls/eng.txt /disk/ocean/lhe/en2chi/Data/15cls/en2chi_tra_eng_15cls.txt
+onmt-build-vocab --size 50000 --save_vocab /disk/ocean/lhe/en2chi/Vocab/15cls/chi.txt /disk/ocean/lhe/en2chi/Data/15cls/en2chi_tra_chi_15cls.txt
+
+PATH£º

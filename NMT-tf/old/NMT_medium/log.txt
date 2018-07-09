@@ -1,0 +1,23 @@
+Development WER/CER test
+CER using the script on Github: https://github.com/belambert/asr-evaluation
+
+baseline_dev:
+	WER: 0.293
+	CER: 12.0%
+baseline_tst:
+	WER: 0.297
+	CER: 12.0%
+
+5_cls_dev:
+	WER: 0.298
+	CER: 13.5%
+5_cls_tst:
+	WER: 0.304
+	CER: 13.8%
+
+2_clst_dev:
+	WER: 0.291
+	CER: 12.5%
+2_cls_tst:
+	WER: 0.286
+	CER: 12.3%

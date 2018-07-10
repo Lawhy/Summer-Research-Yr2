@@ -63,5 +63,5 @@ def extract(filename):
         for weng in wseng:
             openg.write(weng + '\n')
 
-count_wer('pred.txt', './data/baseline/en2chi_dev_chi.txt')
+count_wer('pred.txt', './baseline/en2chi_dev_chi.txt')
 

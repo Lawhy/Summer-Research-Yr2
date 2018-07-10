@@ -183,6 +183,6 @@ def clustering_kmeans(lan, n_clusters):
 
 
 if __name__ == '__main__':
-    clustering_kmeans('chi', 15)
+    clustering_kmeans('chi', 2)
 
 

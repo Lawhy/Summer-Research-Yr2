@@ -11,4 +11,11 @@ def count_vocab(filename):
     print("The size of vocab is: " + str(len(vocab)))
     return vocab
 
-count_vocab('./labelled_data/5_clusters/en2chi_tra_chi_5cls.txt')
+chi = count_vocab('./data/en2chi_tra_chi.txt')
+chi_dev = count_vocab('./data/en2chi_dev_chi.txt')
+diff = 0
+for voc in chi_dev:
+    if voc not in chi:
+        print(voc)
+        diff += 1
+print(diff)

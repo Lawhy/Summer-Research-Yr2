@@ -41,7 +41,7 @@ pip install -r requirements.txt
 
 ### Commands
 
-Preprocess
+- Preprocess:
 
 ```
 python preprocess.py \
@@ -52,7 +52,7 @@ python preprocess.py \
 -save_data data/demo
 ```
 
-Training 
+- Training:
 (Assume: cur_directory=/disk/ocean/lhe/en2chi/nmt-py/models/bs)
 
 ```
@@ -69,8 +69,9 @@ python ../../OpenNMT-py/train.py
 
 ```
 
-Translate
-Assume: cur_directory = /disk/ocean/lhe/en2chi/nmt-py
+- Translate:
+(Assume: cur_directory = /disk/ocean/lhe/en2chi/nmt-py)
+
 ```
 python OpenNMT-py/translate.py 
 -model models/bs{2 5 10 15 cls}/bs{2 5 10 15 cls}_step_NUMBER.pt 

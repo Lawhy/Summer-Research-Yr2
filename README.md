@@ -81,3 +81,6 @@ python OpenNMT-py/translate.py
 -verbose
 ```
 
+### Citation
+- OpenNMT-py:
+   https://github.com/OpenNMT/OpenNMT-py

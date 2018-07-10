@@ -3,7 +3,7 @@ This is a summer project regarding to the problem set of English-to-Chinese tran
 The project is initialized and supervised by Shay Cohen and Joana Ribeiro from the NLP group of the University of Edinburgh.<br />
 The details of this project is in the report file.<br />
 
---- <br />
+---
 
 # Experiment 
 

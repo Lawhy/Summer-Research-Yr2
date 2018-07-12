@@ -2,16 +2,26 @@ import csv
 import re
 import numpy as np
 import time
+import os
 
 # loading the names of classes for data alignment check (better visualisation)
 eng_cls = ['^', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n',
            'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '\'', '$']
-with open('./data/chi_char.txt', 'r', encoding='UTF-8-sig') as cc:
-    chi_cls = [chi.replace('\n', '') for chi in cc.readlines()]
-    han = r'^[\u4E00-\u9FA5]$'
-    for chi in chi_cls:
-        assert bool(re.match(han, chi))
-    chi_cls = ['^'] + chi_cls + ['$']
+
+
+# obtain features from well-formatted training data file
+def get_features(training_data):
+    # each line should contain a word and each character is separated by a space
+    with open(training_data, 'r', encoding='UTF-8-sig') as tra:
+        words = [line.replace(' ', '').replace('\n', '') for line in tra.readlines()]
+    features = set()
+    for word in words:
+        for char in word:
+            features.add(char)
+    features = list(features)
+    features = ['^', '$'] + features
+    print('There are ' + str(len(features)) + ' features in ' + training_data )
+    return features
 
 
 def feature_vector_all(filename, classes, ipa_feature=False):
@@ -22,16 +32,16 @@ def feature_vector_all(filename, classes, ipa_feature=False):
 
         if ipa_feature:
             print('Enable IPA features!')
-            ipa = load_ipa()
+            ipa = load_ipa()  # where needed to be changed if there is another IPA table
             ipa_cls = ipa['flattened_classes']
             ipa_chars = ipa['ordered_contents']
 
         with open(filename, 'r', encoding='UTF-8-sig') as data:
-            dictionary = [word.replace('\n', '') for word in data.readlines()]
+            dictionary = [word.replace('\n', '').replace(' ', '') for word in data.readlines()]
             print(str(len(dictionary)) + ' data are loaded!')
             print('The first three data are: ' + str(dictionary[0:3]))
 
-        with open('feature_vectors.csv', 'w+', encoding='UTF-8', newline='') as output:
+        with open(filename[:len(filename)-4] + '_fvs.csv', 'w+', encoding='UTF-8', newline='') as output:
             total = 0
             writer = csv.writer(output)
             cl_names = cl_left + cl_right
@@ -40,11 +50,11 @@ def feature_vector_all(filename, classes, ipa_feature=False):
                 cl_names += ipa_cls
             cl_names.append('Char')
             cl_names.append('Word')
-            cl_names.append('Cluster')
             writer.writerow(cl_names)
             for word in dictionary:
                 count = 0
                 feature_vectors = feature_vector_unigram(word, cl_left, cl_right, ipa_chars)
+                # print(feature_vectors)
                 for vec in feature_vectors:
                     writer.writerow(vec)
                     total += 1
@@ -101,19 +111,6 @@ def feature_vector_unigram(ori_word, cl_left, cl_right, ipa_chars):
             row.append(word[i])
             row.append(ori_word)
             rows.append(row)
-    # with open('test.csv', 'w+', encoding='UTF-8', newline='') as t:
-    #     wr = csv.writer(t)
-    #     cl_names = cl_left.tolist()[0] + cl_right.tolist()[0]
-    #     if not ipa == []:
-    #         cl_names += ipa_cls
-    #         cl_names += ipa_cls
-    #     cl_names.append('Char')
-    #     cl_names.append('Word')
-    #     cl_names.append('Cluster')
-    #     wr.writerow(cl_names)
-    #     for row in rows:
-    #         wr.writerow(row)
-
     return rows
 
 
@@ -166,29 +163,58 @@ def load_ipa():
         }
 
 
-def chi_char(s):
-    chi_set = set()
-    chi = r'[\u4E00-\u9FA5]'
-    with open(s + '.txt', 'r', encoding='UTF-8-sig') as f:
-        lines = f.readlines()
-        print(lines)
-    for line in lines:
-        for char in line:
-            if bool(re.match(chi, char)):
-                chi_set.add(char)
-    with open('chi_char.txt', 'w+', encoding='UTF-8') as output:
-        for char in chi_set:
-            output.write(char + '\n')
-    return chi_set
-
-
 if __name__ == "__main__":
-    flatten_table('IPA_Table_1.0')  # this line should only be executed if there is some change made in the IPA_Table
-    # The following code can generate the feature vectors
-    # Run each line separately, and change the name of output file to 'fv_*' format for clustering purpose.
-    # feature_vector_all('./data/en2chi_tra_chi.txt', chi_cls, ipa_feature=True)
-    # feature_vector_all('./data/en2chi_dev_chi.txt', chi_cls, ipa_feature=True)
-    # feature_vector_all('./data/en2chi_tst_chi.txt', chi_cls, ipa_feature=True)
-    # feature_vector_all('./data/en2chi_tra_eng.txt', eng_cls, ipa_feature=False)
-    # feature_vector_all('./data/en2chi_dev_eng.txt', eng_cls, ipa_feature=False)
-    # feature_vector_all('./data/en2chi_tst_eng.txt', eng_cls, ipa_feature=False)
+    # The features are determined only by the training data (inductive learning)
+
+    # os.chdir('./data/ar/bs')
+    # ar = get_features('ar_tra.txt')
+    # en = get_features('en_tra.txt')
+    # feature_vector_all('ar_tra.txt', ar)
+    # feature_vector_all('ar_dev.txt', ar)
+    # feature_vector_all('ar_tst.txt', ar)
+    # feature_vector_all('en_tra.txt', en)
+    # feature_vector_all('en_dev.txt', en)
+    # feature_vector_all('en_tst.txt', en)
+
+    # os.chdir('./data/jp/bs')
+    # jp = get_features('jp_tra.txt')
+    # en = get_features('en_tra.txt')
+    # feature_vector_all('jp_tra.txt', jp)
+    # feature_vector_all('jp_dev.txt', jp)
+    # feature_vector_all('jp_tst.txt', jp)
+    # feature_vector_all('en_tra.txt', en)
+    # feature_vector_all('en_dev.txt', en)
+    # feature_vector_all('en_tst.txt', en)
+
+    os.chdir('./data/he/bs')
+    he = get_features('he_tra.txt')
+    en = get_features('en_tra.txt')
+    feature_vector_all('he_tra.txt', he)
+    feature_vector_all('he_dev.txt', he)
+    feature_vector_all('he_tst.txt', he)
+    feature_vector_all('en_tra.txt', en)
+    feature_vector_all('en_dev.txt', en)
+    feature_vector_all('en_tst.txt', en)
+
+    # # Check Chinese IPA
+    # with open('CHI/bs/chi_tst_fvs.csv', 'r', encoding='UTF-8') as tst:
+    #     reader = csv.reader(tst)
+    #     num = 0
+    #     for line in reader:
+    #         if num == 0:
+    #             features = line
+    #         if num >= 5:
+    #             break
+    #         if num > 0:
+    #             content = line[:len(line)-2]
+    #             inds = []
+    #             for i in range(len(content)):
+    #                 n = int(content[i])
+    #                 if n == 1:
+    #                     inds.append(i)
+    #             for j in inds:
+    #                 print(features[j] + ' is a fv component of ' + line[len(line)-2])
+    #
+    #         num += 1
+
+

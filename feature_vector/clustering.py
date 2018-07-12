@@ -4,8 +4,8 @@ from sklearn.cluster import KMeans
 
 
 # load the feature vectors data
-def load_fv(lan):
-    with open('fv_' + lan + '.csv', 'r', encoding='UTF-8-sig') as eng:
+def load_fv(lan, tra_or_dev_or_tst):
+    with open(lan + '_' + tra_or_dev_or_tst + '_' + 'fvs.csv', 'r', encoding='UTF-8-sig') as eng:
         reader = csv.reader(eng)
         fst = True
         fvs = []
@@ -13,9 +13,9 @@ def load_fv(lan):
         ordered_word = []
         for fv in reader:
             if fst:
-                dim = len(fv) - 3
+                dim = len(fv) - 2  # the last two columns are char and word
                 fst = False
-                col_names = fv
+                col_names = fv  # extract the features names
             else:
                 assert len(fv) - 2 == dim
                 ordered_char.append(fv[len(fv)-2])
@@ -39,7 +39,7 @@ def smoothing(data, threshold=3):
     cls = data['titles']
     fvs = data['fvs']
     column_sum = np.sum(fvs, axis=0)
-    # print(column_sum)
+    print('The shape after summing: ' + str(column_sum.shape))
     less_than_threshold = column_sum <= threshold
     col_index_to_be_removed = []
     count = 0
@@ -64,125 +64,82 @@ def smoothing(data, threshold=3):
     }
 
 
-def clustering_kmeans(lan, n_clusters):
-    data = load_fv(lan)
-    chars = data['chars']
-    words = data['words']
-    if lan == 'eng':
-        fvs = data['fvs']
-        # cls = data['titles']
+def clustering_kmeans(lan, n_clusters, smooth=False):
 
-        # load eva and tst data for prediction
-        eva_data = load_fv('eng_eva')
-        eva_fvs = eva_data['fvs']
-        eva_chars = eva_data['chars']
-        eva_words = eva_data['words']
+    # loading tra dev tst data
+    tra = load_fv(lan, 'tra')
+    tra_fvs = tra['fvs']
+    tra_chars = tra['chars']   # get the ordered chars
+    tra_words = tra['words']   # get the ordered words
 
-        tst_data = load_fv('eng_tst')
-        tst_fvs = tst_data['fvs']
-        tst_chars = tst_data['chars']
-        tst_words = tst_data['words']
-    elif lan == 'chi':
-        smooth = smoothing(data)
-        fvs = smooth['fvs']
+    dev = load_fv(lan, 'dev')
+    dev_fvs = dev['fvs']
+    dev_chars = dev['chars']
+    dev_words = dev['words']
+
+    tst = load_fv(lan, 'tst')
+    tst_fvs = tst['fvs']
+    tst_chars = tst['chars']
+    tst_words = tst['words']
+
+    if smooth:
+        smooth = smoothing(tra)
+        tra_fvs = smooth['fvs']
         col_index_to_be_removed = smooth['removed_index']
-        # cls = smooth['titles']
-        # cls = cls[0].tolist()
-
-        # load eva and tst data for prediction
-        eva_data = load_fv('chi_dev')
-        eva_fvs = eva_data['fvs']
-        eva_fvs = np.delete(eva_fvs, col_index_to_be_removed, axis=1)  # smooth evaluation matrix
-        eva_chars = eva_data['chars']
-        eva_words = eva_data['words']
-
-        tst_data = load_fv('chi_tst')
-        tst_fvs = tst_data['fvs']
-        tst_fvs = np.delete(tst_fvs, col_index_to_be_removed, axis=1)  # smooth evaluation matrix
-        tst_chars = tst_data['chars']
-        tst_words = tst_data['words']
+        dev_fvs = np.delete(dev_fvs, col_index_to_be_removed, axis=1)  # smooth dev matrix
+        tst_fvs = np.delete(tst_fvs, col_index_to_be_removed, axis=1)  # smooth test matrix
 
         print('The shapes for tra, eva, tst matrices are:')
-        print(fvs.shape)
-        print(eva_fvs.shape)
+        print(tra_fvs.shape)
+        print(dev_fvs.shape)
         print(tst_fvs.shape)
-    else:
-        print("Invalid language!")
-    # using k-means algorithm to learn clustering of training dataset and predict the evaluation and test dataset
-    k_means = KMeans(n_clusters=n_clusters, init='k-means++')
-    k_means = k_means.fit(fvs)
-    clusters = k_means.labels_
-    eva_clus = k_means.predict(eva_fvs)
-    tst_clus = k_means.predict(tst_fvs)
-    assert len(chars) == len(words)
-    assert len(words) == len(clusters)
-    # form labelled training dataset
-    with open('en2chi_tra_' + lan + '_' + str(n_clusters) + 'cls.txt', 'w+', encoding='UTF-8') as output:
-        cur_labelled_word = []
-        for i in range(len(chars)):
-            cur_char = chars[i]
-            cur_label = clusters[i]
-            cur_labelled_word.append(cur_char + '-' + str(cur_label))
-            if i+1 == len(chars):
-                print('last training word!')
-                cur_labelled_word = ' '.join(cur_labelled_word)
-                output.write(cur_labelled_word + '\n')
-                break
-            # skip to the next word and store the current word
-            if words[i+1] != words[i]:
-                # print('next word!')
-                cur_labelled_word = ' '.join(cur_labelled_word)
-                output.write(cur_labelled_word + '\n')
-                cur_labelled_word = []
-    # form labelled evaluation dataset
-    with open('en2chi_dev_' + lan + '_' + str(n_clusters) + 'cls.txt', 'w+', encoding='UTF-8') as op_eva:
-        cur_labelled_word = []
-        for i in range(len(eva_chars)):
-            cur_char = eva_chars[i]
-            cur_label = eva_clus[i]
-            cur_labelled_word.append(cur_char + '-' + str(cur_label))
-            if i+1 == len(eva_chars):
-                print('last evaluation word!')
-                cur_labelled_word = ' '.join(cur_labelled_word)
-                op_eva.write(cur_labelled_word + '\n')
-                break
-            # skip to the next word and store the current word
-            if eva_words[i+1] != eva_words[i]:
-                # print('next word!')
-                cur_labelled_word = ' '.join(cur_labelled_word)
-                op_eva.write(cur_labelled_word + '\n')
-                cur_labelled_word = []
-    # form labelled test dataset
-    with open('en2chi_tst_' + lan + '_' + str(n_clusters) + 'cls.txt', 'w+', encoding='UTF-8') as op_tst:
-        cur_labelled_word = []
-        for i in range(len(tst_chars)):
-            cur_char = tst_chars[i]
-            cur_label = tst_clus[i]
-            cur_labelled_word.append(cur_char + '-' + str(cur_label))
-            if i+1 == len(tst_chars):
-                print('last testing word!')
-                cur_labelled_word = ' '.join(cur_labelled_word)
-                op_tst.write(cur_labelled_word + '\n')
-                break
-            # skip to the next word and store the current word
-            if tst_words[i+1] != tst_words[i]:
-                # print('next word!')
-                cur_labelled_word = ' '.join(cur_labelled_word)
-                op_tst.write(cur_labelled_word + '\n')
-                cur_labelled_word = []
 
-    # with open('fv_' + lan + '_labelled_sample.csv', 'w+', encoding='UTF-8', newline='') as fl:
-    #     wr = csv.writer(fl)
-    #     wr.writerow(cls)
-    #     ind = 0
-    #     fvs = fvs.tolist()
-    #     while ind < 30:
-    #         wr.writerow(fvs[ind] + [chars[ind]] + [words[ind]] + [clusters[ind]])
-    #         print([chars[ind]] + [words[ind]] + [clusters[ind]])
-    #         ind += 1
+    # using k-means algorithm to learn clustering of training dataset and predict the dev and test dataset
+    k_means = KMeans(n_clusters=n_clusters, init='k-means++')
+    k_means = k_means.fit(tra_fvs)
+    tra_clus = k_means.labels_
+    dev_clus = k_means.predict(dev_fvs)
+    tst_clus = k_means.predict(tst_fvs)
+
+    # form labelled dataset
+    chars_dict = {'tra': tra_chars, 'dev': dev_chars, 'tst': tst_chars}
+    words_dict = {'tra': tra_words, 'dev': dev_words, 'tst': tst_words}
+    clus_dict = {'tra': tra_clus, 'dev': dev_clus, 'tst': tst_clus}
+    for title in ['tra', 'dev', 'tst']:
+        chars = chars_dict[title]
+        words = words_dict[title]
+        clusters = clus_dict[title]
+        assert len(chars) == len(words)
+        assert len(words) == len(clusters)
+        with open(lan + '_' + title + '_' + str(n_clusters) + 'cls.txt', 'w+', encoding='UTF-8') as output:
+            cur_labelled_word = []
+            for i in range(len(chars)):
+                cur_char = chars[i]
+                cur_label = clusters[i]
+                cur_labelled_word.append(cur_char + '￨' + str(cur_label))
+                if i+1 == len(chars):
+                    print('last training word!')
+                    cur_labelled_word = ' '.join(cur_labelled_word)
+                    output.write(cur_labelled_word + '\n')
+                    break
+                # skip to the next word and store the current word
+                if words[i+1] != words[i]:
+                    # print('next word!')
+                    cur_labelled_word = ' '.join(cur_labelled_word)
+                    output.write(cur_labelled_word + '\n')
+                    cur_labelled_word = []
 
 
 if __name__ == '__main__':
-    clustering_kmeans('chi', 2)
+    print('Clustering on progress')
+    # en2chi
+    # clustering_kmeans('ch', 2,  smooth=True)
+    # clustering_kmeans('ch', 5,  smooth=True)
+    # clustering_kmeans('ch', 10, smooth=True)
+    # clustering_kmeans('ch', 15, smooth=True)
+    # clustering_kmeans('en', 2)
+    # clustering_kmeans('en', 5)
+    # clustering_kmeans('en', 10)
+    # clustering_kmeans('en', 15)
 
 

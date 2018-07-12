@@ -26,7 +26,7 @@ def lower_everything(eng_file):
     with open(eng_file, 'r', encoding='UTF-8-sig') as ip:
         lines = [line.lower() for line in ip.readlines()]
         print(lines)
-    with open('./baseline/' + eng_file, 'w+', encoding='UTF-8') as output:
+    with open('../' + eng_file, 'w+', encoding='UTF-8') as output:
         output.writelines(lines)
 
 

@@ -93,6 +93,9 @@ do
    echo $i; 
 done
 ```
+- check CER:
+Use the script here: https://github.com/belambert/asr-evaluation
+And do similar for-loop as above.
 
 ### Citation
 - OpenNMT-py:<br />

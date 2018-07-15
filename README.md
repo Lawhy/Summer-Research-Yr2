@@ -87,7 +87,7 @@ done
 (Get wer.py from NMT-py directory)
 ```
 # (In python3 venv)
-for i in {11600..12500..100}; 
+for i in {checkpoint_start_NUMBER..checkpoint_end_NUMBER..checkpoint_save_STEPS}; 
 do 
    python wer.py bs_dev_$i.txt ch_dev.txt; 
    echo $i; 

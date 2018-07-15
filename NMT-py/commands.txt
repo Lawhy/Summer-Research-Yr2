@@ -2,25 +2,27 @@ If not correct conda,
 	bash ~/.bashrc
 
 
-cur_directory: /disk/ocean/lhe/en2chi/nmt-py
+cur_directory: /disk/ocean/lhe/transliteration/nmt-py/OpenNMT-py/translate.py
 Translate command:
-python OpenNMT-py/translate.py 
--model models/bs{2 5 10 15 cls}/bs{2 5 10 15 cls}_step_NUMBER.pt 
--src data/bs{2 5 10 15 cls}/en2chi_dev_eng.txt 
--output results/bs{2 5 10 15 cls}/dev/bs{2 5 10 15 cls}_dev_NUMBER.txt 
--replace_unk 
+python /disk/ocean/lhe/transliteration/nmt-py/OpenNMT-py/translate.py
+-model bs_step_$i.pt
+-src data/en_dev.txt
+-output infer/bs_dev_$i.txt
+-replace_unk
 -verbose
+-gpu 1
 
-python ../../OpenNMT-py/train.py 
--data bs{2 5 10 15 cls} 
--save_model bs{2 5 10 15 cls} 
--train_steps 16000 
--seed 7 
--start_decay_step 7000 
--save_checkpoint_steps 50 
--keep_checkpoint 20
--train_from (optional retraining)
+python /disk/ocean/lhe/transliteration/nmt-py/OpenNMT-py/train.py
+-data data/bs
+-save_model bs
+-train_steps 12500
+-seed 7
+-start_decay_step 8000
+-save_checkpoint_steps 100
+-keep_checkpoint 10
+-decay_steps 1000
 -gpuid 1
+-learning_rate 0.8
 
 
 Test torch:
@@ -49,3 +51,6 @@ this is reflect in the path
 so every time you want to download a file, copy it to /disk/cohortnas/web/lhe (a zip file or otherwise) and then you can download it from
 
 http://kinloch.inf.ed.ac.uk/public/direct/lhe/FILE
+
+Model directory:
+/disk/ocean/lhe/transliteration/nmt-py/models/en2ch/m+-/2

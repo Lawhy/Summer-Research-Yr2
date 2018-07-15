@@ -44,41 +44,44 @@ pip install -r requirements.txt
 - Preprocess:
 
 ```
-python preprocess.py \
--train_src data/src-train.txt \
--train_tgt data/tgt-train.txt \
--valid_src data/src-val.txt \
--valid_tgt data/tgt-val.txt \
--save_data data/demo
+python PATH_FOR_OpenNMT/OpenNMT-py/preprocess.py
+-train_src data/en_tra.txt
+-train_tgt data/ch_tra.txt
+-valid_src data/en_dev.txt
+-valid_tgt data/ch_dev.txt
 ```
 
 - Training:
 (Assume: cur_directory=/disk/ocean/lhe/en2chi/nmt-py/models/bs)
 
 ```
-python ../../OpenNMT-py/train.py 
--data bs{2 5 10 15 cls} # name of the preprocessed data
--save_model bs{2 5 10 15 cls} # name of the model
--train_steps 16000 
--seed 7 
--start_decay_step 7000 
--save_checkpoint_steps 50 
--keep_checkpoint 20
--train_from # (optional for retraining)
--gpuid 1  # (specify gpu device)
+python PATH_FOR_OpenNMT/OpenNMT-py/train.py
+-data data/bs
+-save_model bs
+-train_steps 12500
+-seed 7
+-start_decay_step 8000
+-save_checkpoint_steps 100
+-keep_checkpoint 10
+-decay_steps 1000
+-gpuid 1
+-learning_rate 0.8
 
 ```
 
 - Translate:
-(Assume: cur_directory = /disk/ocean/lhe/en2chi/nmt-py)
 
 ```
-python OpenNMT-py/translate.py 
--model models/bs{2 5 10 15 cls}/bs{2 5 10 15 cls}_step_NUMBER.pt 
--src data/bs{2 5 10 15 cls}/en2chi_dev_eng.txt 
--output results/bs{2 5 10 15 cls}/dev/bs{2 5 10 15 cls}_dev_NUMBER.txt 
--replace_unk 
+for i in {checkpoint_start_NUMBER..checkpoint_end_NUMBER..checkpoint_save_STEPS}
+do
+python PATH_FOR_OpenNMT/OpenNMT-py/translate.py
+-model bs_step_$i.pt
+-src data/en_dev.txt
+-output infer/bs_dev_$i.txt
+-replace_unk
 -verbose
+-gpu 1
+done
 ```
 
 ### Citation

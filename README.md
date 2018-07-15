@@ -1,7 +1,8 @@
 # Transliteration
 This is a summer project regarding to the problem set of multi-lingual transliteration. <br />
 The project is initialized and supervised by Shay Cohen and Joana Ribeiro from the NLP group of the University of Edinburgh.<br />
-The details of this project is in the report file.<br />
+The details of this project is in the report file: <br />
+https://docs.google.com/document/d/1XQTABQMb8yKXFJmztmp0CIdFN2FmdXLmDAEXUzzUbMI/edit?usp=sharing<br />
 
 ---
 
@@ -83,6 +84,19 @@ python PATH_FOR_OpenNMT/OpenNMT-py/translate.py
 -gpu 1
 done
 ```
+- check WER: 
+(Get wer.py from NMT-py directory)
+```
+# (In python3 venv)
+for i in {checkpoint_start_NUMBER..checkpoint_end_NUMBER..checkpoint_save_STEPS}; 
+do 
+   python wer.py bs_dev_$i.txt ch_dev.txt; 
+   echo $i; 
+done
+```
+- check CER:
+Use the script here: https://github.com/belambert/asr-evaluation
+And do similar for-loop as above.
 
 ### Citation
 - OpenNMT-py:<br />

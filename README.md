@@ -83,6 +83,16 @@ python PATH_FOR_OpenNMT/OpenNMT-py/translate.py
 -gpu 1
 done
 ```
+- check WER: 
+(Get wer.py from NMT-py directory)
+```
+# (In python3 venv)
+for i in {11600..12500..100}; 
+do 
+   python wer.py bs_dev_$i.txt ch_dev.txt; 
+   echo $i; 
+done
+```
 
 ### Citation
 - OpenNMT-py:<br />

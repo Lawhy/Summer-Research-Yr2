@@ -116,7 +116,7 @@ def clustering_kmeans(lan, n_clusters, smooth=False):
             for i in range(len(chars)):
                 cur_char = chars[i]
                 cur_label = clusters[i]
-                cur_labelled_word.append(cur_char + '￨' + str(cur_label))
+                cur_labelled_word.append(cur_char + u'￨' + str(cur_label))
                 if i+1 == len(chars):
                     print('last training word!')
                     cur_labelled_word = ' '.join(cur_labelled_word)
@@ -130,6 +130,16 @@ def clustering_kmeans(lan, n_clusters, smooth=False):
                     cur_labelled_word = []
 
 
+def same(f1, f2):
+    with open(f1, 'r', encoding='UTF-8') as inp1:
+        ls1 = inp1.readlines()
+    with open(f2, 'r', encoding='UTF-8') as inp2:
+        ls2 = inp2.readlines()
+    assert len(ls1) == len(ls2)
+    for i in range(len(ls1)):
+        assert ls1[i] == ls2[i]
+
+
 if __name__ == '__main__':
     print('Clustering on progress')
     # en2chi
@@ -141,5 +151,4 @@ if __name__ == '__main__':
     # clustering_kmeans('en', 5)
     # clustering_kmeans('en', 10)
     # clustering_kmeans('en', 15)
-
 

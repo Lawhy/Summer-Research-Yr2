@@ -1,0 +1,62 @@
+If not correct conda, 
+	bash ~/.bashrc
+
+
+cur_directory: /disk/ocean/lhe/transliteration/nmt-py/OpenNMT-py/translate.py
+Translate command:
+python /disk/ocean/lhe/transliteration/nmt-py/OpenNMT-py/translate.py
+-model bs_step_$i.pt
+-src data/en_dev.txt
+-output infer/bs_dev_$i.txt
+-replace_unk
+-verbose
+-gpu 1
+
+python /disk/ocean/lhe/transliteration/nmt-py/OpenNMT-py/train.py
+-data data/bs
+-save_model bs
+-train_steps 12500
+-seed 7
+-start_decay_step 8000
+-save_checkpoint_steps 100
+-keep_checkpoint 10
+-decay_steps 1000
+-gpuid 1
+-learning_rate 0.8
+
+
+Test torch:
+In [1]: import torch
+
+In [2]: torch.cuda.current_device()
+Out[2]: 0
+
+In [3]: torch.cuda.device(0)
+Out[3]: <torch.cuda.device at 0x7efce0b03be0>
+
+In [4]: torch.cuda.device_count()
+Out[4]: 1
+
+In [5]: torch.cuda.get_device_name(0)
+Out[5]: 'GeForce GTX 950M'
+
+regarding disk space: check out this URL
+
+http://kinloch.inf.ed.ac.uk/public/direct/lhe/index.html
+
+this is reflect in the path
+
+/disk/cohortnas/web/lhe
+
+so every time you want to download a file, copy it to /disk/cohortnas/web/lhe (a zip file or otherwise) and then you can download it from
+
+http://kinloch.inf.ed.ac.uk/public/direct/lhe/FILE
+
+Model directory:
+/disk/ocean/lhe/transliteration/nmt-py/models/en2ch/m+-/2
+
+Script directory:
+/disk/ocean/lhe/transliteration/nmt-py/models/scripts/infer_scripts
+
+Go to infer dir and do:
+cp -r /disk/ocean/lhe/transliteration/nmt-py/models/scripts/infer_scripts/* .

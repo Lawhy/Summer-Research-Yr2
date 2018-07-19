@@ -3,6 +3,7 @@ import re
 import numpy as np
 import time
 import os
+import random
 
 # loading the names of classes for data alignment check (better visualisation)
 eng_cls = ['^', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n',
@@ -51,14 +52,29 @@ def feature_vector_all(filename, classes, ipa_feature=False):
             cl_names.append('Char')
             cl_names.append('Word')
             writer.writerow(cl_names)
+            lst = []  #
+            pre = ""  #
+            # random.shuffle(dictionary)
             for word in dictionary:
+                # Test for consecutive duplicates
+                # if word == pre and pre != "":
+                #     new = ""
+                #     for char in word:
+                #         new += " " + char
+                #     print(new)
+                #     lst.append(new)
+                # pre = word
+
                 count = 0
                 feature_vectors = feature_vector_unigram(word, cl_left, cl_right, ipa_chars)
+                assert len(feature_vectors) == len(word)
                 # print(feature_vectors)
                 for vec in feature_vectors:
                     writer.writerow(vec)
                     total += 1
                     count += 1
+                assert count == len(word)
+                # print(temp)
                 # print('There are ' + str(count) + ' characters in the word: ' + word)
             print('Number of feature vectors generated: ' + str(total))
 
@@ -72,7 +88,7 @@ def feature_vector_unigram(ori_word, cl_left, cl_right, ipa_chars):
     cl_left = np.asmatrix(cl_left)
     cl_right = np.asmatrix(cl_right)
 
-    word = '^' + ori_word.lower() + '$'  # add the ^^ and $$ for simpler calculation
+    word = '^' + ori_word + '$'  # add the ^ and $ as start end symbol
     rows = []
     for i in range(len(word)):
         if word[i] == '^' or word[i] == '$':
@@ -107,10 +123,13 @@ def feature_vector_unigram(ori_word, cl_left, cl_right, ipa_chars):
                 row = row + left_ipa + right_ipa
                 # if not len(ori_word) == 1:
                 #     assert sum(row) >= 3
-
+            else:
+                # assert sum(row) == 2
+                pass
             row.append(word[i])
             row.append(ori_word)
             rows.append(row)
+    assert len(rows) == len(word)-2
     return rows
 
 
@@ -166,12 +185,12 @@ def load_ipa():
 if __name__ == "__main__":
     # The features are determined only by the training data (inductive learning)
 
-    # os.chdir('./data/ar/bs')
-    # ar = get_features('ar_tra.txt')
-    # en = get_features('en_tra.txt')
-    # feature_vector_all('ar_tra.txt', ar)
-    # feature_vector_all('ar_dev.txt', ar)
-    # feature_vector_all('ar_tst.txt', ar)
+    os.chdir('./data/ar/bs')
+    ar = get_features('ar_tra.txt')
+    en = get_features('en_tra.txt')
+    feature_vector_all('ar_tra.txt', ar)
+    feature_vector_all('ar_dev.txt', ar)
+    feature_vector_all('ar_tst.txt', ar)
     # feature_vector_all('en_tra.txt', en)
     # feature_vector_all('en_dev.txt', en)
     # feature_vector_all('en_tst.txt', en)
@@ -186,15 +205,15 @@ if __name__ == "__main__":
     # feature_vector_all('en_dev.txt', en)
     # feature_vector_all('en_tst.txt', en)
 
-    os.chdir('./data/he/bs')
-    he = get_features('he_tra.txt')
-    en = get_features('en_tra.txt')
-    feature_vector_all('he_tra.txt', he)
-    feature_vector_all('he_dev.txt', he)
-    feature_vector_all('he_tst.txt', he)
-    feature_vector_all('en_tra.txt', en)
-    feature_vector_all('en_dev.txt', en)
-    feature_vector_all('en_tst.txt', en)
+    # os.chdir('./data/he/bs')
+    # he = get_features('he_tra.txt')
+    # en = get_features('en_tra.txt')
+    # feature_vector_all('he_tra.txt', he)
+    # feature_vector_all('he_dev.txt', he)
+    # feature_vector_all('he_tst.txt', he)
+    # feature_vector_all('en_tra.txt', en)
+    # feature_vector_all('en_dev.txt', en)
+    # feature_vector_all('en_tst.txt', en)
 
     # # Check Chinese IPA
     # with open('CHI/bs/chi_tst_fvs.csv', 'r', encoding='UTF-8') as tst:

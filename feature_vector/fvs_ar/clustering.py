@@ -1,12 +1,12 @@
 import numpy as np
 import csv
 from sklearn.cluster import KMeans
-
+import re
 
 # load the feature vectors data
 def load_fv(lan, tra_or_dev_or_tst):
-    with open(lan + '_' + tra_or_dev_or_tst + '_' + 'fvs.csv', 'r', encoding='UTF-8-sig') as eng:
-        reader = csv.reader(eng)
+    with open(lan + '_' + tra_or_dev_or_tst + '_' + 'fvs.csv', 'r', encoding='UTF-8-sig') as inp:
+        reader = csv.reader(inp)
         fst = True
         fvs = []
         ordered_char = []
@@ -64,7 +64,7 @@ def smoothing(data, threshold=3):
     }
 
 
-def clustering_kmeans(lan, n_clusters, smooth=False):
+def clustering_kmeans(lan, n_clusters, smooth=False, delimiter=u'￨'):
 
     # loading tra dev tst data
     tra = load_fv(lan, 'tra')
@@ -111,34 +111,63 @@ def clustering_kmeans(lan, n_clusters, smooth=False):
         clusters = clus_dict[title]
         assert len(chars) == len(words)
         assert len(words) == len(clusters)
+        # print(len(set(words)))
+
+        # load the original data for word alignment (prevent consecutive duplicates)
+        with open(lan + '_' + title + '.txt', 'r', encoding='UTF-8-sig') as data:
+            dictionary = [word.replace('\n', '').replace(' ', '') for word in data.readlines()]
+
         with open(lan + '_' + title + '_' + str(n_clusters) + 'cls.txt', 'w+', encoding='UTF-8') as output:
             cur_labelled_word = []
+
+            aligned_index = 0
+            aligned_word = dictionary[aligned_index]
+            aligned_count = 0
+
             for i in range(len(chars)):
+                aligned_count += 1
                 cur_char = chars[i]
                 cur_label = clusters[i]
-                cur_labelled_word.append(cur_char + '￨' + str(cur_label))
+                cur_labelled_word.append(cur_char + delimiter + str(cur_label))
+                # deal with the marginal case
                 if i+1 == len(chars):
                     print('last training word!')
                     cur_labelled_word = ' '.join(cur_labelled_word)
                     output.write(cur_labelled_word + '\n')
                     break
                 # skip to the next word and store the current word
-                if words[i+1] != words[i]:
+                # if words[i+1] != words[i]: # This line will fail for consecutive duplicates!!!
                     # print('next word!')
+                if aligned_count == len(aligned_word):
                     cur_labelled_word = ' '.join(cur_labelled_word)
                     output.write(cur_labelled_word + '\n')
+
+                    # refresh the container for next word
                     cur_labelled_word = []
+                    aligned_count = 0
+                    aligned_index += 1
+                    aligned_word = dictionary[aligned_index]
+
+        # Test output alignment with the original data
+        with open(lan + '_' + title + '_' + str(n_clusters) + 'cls.txt', 'r', encoding='UTF-8') as test:
+            t_data = test.readlines()
+        char = r'(.?)' + delimiter + '[0-9]'  # take the cluster numbers away
+        pa = re.compile(char)
+        clean_words = [''.join(re.findall(pa, line)) for line in t_data]
+        assert len(clean_words) == len(dictionary)
+        for j in range(len(clean_words)):
+            assert clean_words[j] == dictionary[j]
 
 
 if __name__ == '__main__':
     print('Clustering on progress')
     # ar2en
-    clustering_kmeans('ar', 2)
-    clustering_kmeans('ar', 5)
-    clustering_kmeans('ar', 10)
-    clustering_kmeans('ar', 15)
-    clustering_kmeans('en', 2)
-    clustering_kmeans('en', 5)
-    clustering_kmeans('en', 10)
-    clustering_kmeans('en', 15)
+    # clustering_kmeans('ar', 2)
+    # clustering_kmeans('ar', 5)
+    # clustering_kmeans('ar', 10)
+    # clustering_kmeans('ar', 15)
+    clustering_kmeans('en', 2, delimiter='-')
+    clustering_kmeans('en', 5, delimiter='-')
+    clustering_kmeans('en', 10, delimiter='-')
+    clustering_kmeans('en', 15, delimiter='-')
 

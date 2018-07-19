@@ -9,17 +9,17 @@ $ann is the annotation class you choose {bs -+ +- ++}
 $t_steps is the training steps you want to set, for en2ch 12500-13500 is enough.
 $l_rate is the intial learning rate
 
-The default working directory is: /disk/ocean/lhe/transliteration/nmt-py/models
+The default working directory is: $main_dir/models
 So each time when you have a new setting to train on, you should archive the old one (by changing its name)
 
 An example of the whole process is:
-Main directory: /disk/ocean/lhe/transliteration/nmt-py/models
+Main directory: $main_dir/models
 Suppose lan=ch, ann=+-, t_steps=12500
 Script creates needed sub-directories
-Woring sub-directory /disk/ocean/lhe/transliteration/nmt-py/models/ch/m+-
+Woring sub-directory $main_dir/models/ch/m+-
 In m+-, there are {2 5 10 15}, four sub-directories
 In each of them, there are {data infer}, two sub-directories
-Script copies correspongding data from /disk/ocean/lhe/transliteration/nmt-py/data to the {data}
+Script copies correspongding data from $main_dir/data to the {data}
 Script runs preprocess.py train.py and translate.py of OpenNMT-py, the translation results of development set are saved in {infer}
 
 Please manually copy the inference scripts {wer.py cer.py err} from the Scripts directory to {infer} and run err in python3 environment
@@ -36,9 +36,12 @@ If the next character after the backslash is a space or a tab, you just get a li
 
 COMMENT
 
+main_dir=/disk/ocean/lhe/transliteration/nmt-py # Change this to your working directory
+                                                # OpenNMT and data must be included in this directory
+
 echo "Language: {ar ch he jp}"
 read lan
-cd /disk/ocean/lhe/transliteration/nmt-py/data/$lan/
+cd $main_dir/data/$lan/
 cat direction.txt
 echo ""
 echo "What model do you want? {bs -+ +- ++}"
@@ -49,9 +52,9 @@ echo "Learning rate:"
 read l_rate
 
 # make a new main working directory after each setting is archived
-mkdir /disk/ocean/lhe/transliteration/nmt-py/models
-mkdir /disk/ocean/lhe/transliteration/nmt-py/models/$lan
-mkdir /disk/ocean/lhe/transliteration/nmt-py/models/logs
+mkdir $main_dir/models
+mkdir $main_dir/models/$lan
+mkdir $main_dir/models/logs
 
 # Assign source and target languages
 src="en"
@@ -69,23 +72,23 @@ dev="_dev"
 
 if [ $ann = "bs" ]
 then
- cd /disk/ocean/lhe/transliteration/nmt-py/data/$lan/
+ cd $main_dir/data/$lan/
  # Create necessary directories
- mkdir /disk/ocean/lhe/transliteration/nmt-py/models/$lan/$ann
- mkdir /disk/ocean/lhe/transliteration/nmt-py/models/$lan/$ann/data
- mkdir /disk/ocean/lhe/transliteration/nmt-py/models/$lan/$ann/infer
- cp -r bs/* /disk/ocean/lhe/transliteration/nmt-py/models/$lan/$ann/data/
+ mkdir $main_dir/models/$lan/$ann
+ mkdir $main_dir/models/$lan/$ann/data
+ mkdir $main_dir/models/$lan/$ann/infer
+ cp -r bs/* $main_dir/models/$lan/$ann/data/
 
  # Go to the model directory
- cd /disk/ocean/lhe/transliteration/nmt-py/models/$lan/$ann
+ cd $main_dir/models/$lan/$ann
 
  # ---Preprocess---
- python /disk/ocean/lhe/transliteration/nmt-py/OpenNMT-py/preprocess.py \
+ python $main_dir/OpenNMT-py/preprocess.py \
  -train_src data/*$src$tra* -train_tgt data/*$tgt$tra* \
  -valid_src data/*$src$dev* -valid_tgt data/*$tgt$dev* \
  -save_data data/bs
  # ---Training---
- python /disk/ocean/lhe/transliteration/nmt-py/OpenNMT-py/train.py \
+ python $main_dir/OpenNMT-py/train.py \
  -data data/bs \
  -save_model bs \
  -train_steps $t_steps \
@@ -96,12 +99,12 @@ then
  -decay_steps 1000 \
  -gpuid 1 \
  -learning_rate $l_rate \
- -log_file /disk/ocean/lhe/transliteration/nmt-py/models/logs/$lan/bs.log
+ -log_file $main_dir/models/logs/$lan/bs.log
  # ---Infer---
  let start=t_steps-900
  for ((j = $start; j <= $t_steps; j+=100))
  do
-  python /disk/ocean/lhe/transliteration/nmt-py/OpenNMT-py/translate.py \
+  python $main_dir/OpenNMT-py/translate.py \
   -model bs_step_$j.pt \
   -src data/*$src$dev* \
   -output infer/bs_dev_$j.txt \
@@ -113,14 +116,14 @@ fi
 
 if [ $ann != "bs" ]
 then
- mkdir /disk/ocean/lhe/transliteration/nmt-py/models/$lan/"m$ann"
+ mkdir $main_dir/models/$lan/"m$ann"
  # Create necessary directories
  for i in {2,5,10,15}
  do
-   cd /disk/ocean/lhe/transliteration/nmt-py/data/$lan/
-   mkdir /disk/ocean/lhe/transliteration/nmt-py/models/$lan/"m$ann"/$i
-   mkdir /disk/ocean/lhe/transliteration/nmt-py/models/$lan/"m$ann"/$i/data
-   mkdir /disk/ocean/lhe/transliteration/nmt-py/models/$lan/"m$ann"/$i/infer
+   cd $main_dir/data/$lan/
+   mkdir $main_dir/models/$lan/"m$ann"/$i
+   mkdir $main_dir/models/$lan/"m$ann"/$i/data
+   mkdir $main_dir/models/$lan/"m$ann"/$i/infer
    # To the {2 5 10 15} cls and copy to the corresponding model dir
    dp=$i
    dp+="cls"
@@ -128,29 +131,29 @@ then
    # Copy data files according to the annotations (-+ +- ++)
    if [ $ann = "-+" ]
    then
-   	cp -r ./bs/*$src* /disk/ocean/lhe/transliteration/nmt-py/models/$lan/"m$ann"/$i/data/  # the - part
-        cp -r ./$dp/*$tgt* /disk/ocean/lhe/transliteration/nmt-py/models/$lan/"m$ann"/$i/data/ # the + part
+   	cp -r ./bs/*$src* $main_dir/models/$lan/"m$ann"/$i/data/  # the - part
+        cp -r ./$dp/*$tgt* $main_dir/models/$lan/"m$ann"/$i/data/ # the + part
    fi
    if [ $ann = "+-" ]
    then
-	cp -r ./$dp/*$src* /disk/ocean/lhe/transliteration/nmt-py/models/$lan/"m$ann"/$i/data/ # the + part
-        cp -r ./bs/*$tgt* /disk/ocean/lhe/transliteration/nmt-py/models/$lan/"m$ann"/$i/data/  # the - part
+	cp -r ./$dp/*$src* $main_dir/models/$lan/"m$ann"/$i/data/ # the + part
+        cp -r ./bs/*$tgt* $main_dir/models/$lan/"m$ann"/$i/data/  # the - part
    fi
 
    if [ $ann = "++" ]
    then
-   	cp -r ./$dp/* /disk/ocean/lhe/transliteration/nmt-py/models/$lan/"m$ann"/$i/data/ # everything +
+   	cp -r ./$dp/* $main_dir/models/$lan/"m$ann"/$i/data/ # everything +
    fi
 
    # Go to the model directory
-   cd /disk/ocean/lhe/transliteration/nmt-py/models/$lan/"m$ann"/$i
+   cd $main_dir/models/$lan/"m$ann"/$i
    # --- Preprocess ---
-   python /disk/ocean/lhe/transliteration/nmt-py/OpenNMT-py/preprocess.py \
+   python $main_dir/OpenNMT-py/preprocess.py \
    -train_src data/*$src$tra* -train_tgt data/*$tgt$tra* \
    -valid_src data/*$src$dev* -valid_tgt data/*$tgt$dev* \
    -save_data data/$i 
    # --- Training ---
-   python /disk/ocean/lhe/transliteration/nmt-py/OpenNMT-py/train.py \
+   python $main_dir/OpenNMT-py/train.py \
    -data data/$i \
    -save_model $i \
    -train_steps $t_steps \
@@ -161,7 +164,7 @@ then
    -decay_steps 1000 \
    -learning_rate $l_rate \
    -gpuid 2 \
-   -log_file /disk/ocean/lhe/transliteration/nmt-py/models/logs/$lan/$i$ann.log 
+   -log_file $main_dir/models/logs/$lan/$i$ann.log 
    # --- Infer ---
    let start=$t_steps-900
    development="_dev_"
@@ -169,7 +172,7 @@ then
    infer="_infer"
    for ((j = $start; j <= $t_steps; j+=100)); 
    do
-     python /disk/ocean/lhe/transliteration/nmt-py/OpenNMT-py/translate.py \
+     python $main_dir/OpenNMT-py/translate.py \
      -model $i$step$j.pt \
      -src data/*$src$dev* \
      -output infer/$i$development$j.txt \

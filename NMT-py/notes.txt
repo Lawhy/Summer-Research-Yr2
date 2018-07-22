@@ -59,4 +59,4 @@ Script directory:
 /disk/ocean/lhe/transliteration/nmt-py/models/scripts/infer_scripts
 
 Go to infer dir and do:
-cp -r /disk/ocean/lhe/transliteration/nmt-py/models/scripts/infer_scripts/* .
+cp -r /disk/ocean/lhe/transliteration/nmt-py/scripts/infer_scripts/* .

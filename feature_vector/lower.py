@@ -9,13 +9,17 @@ def lower_everything(eng_file):
         output.writelines(lines)
 
 
-def to_windows(file):
-    with open(file, 'r', encoding='UTF-8-sig') as ip:
-        lines = ip.readlines()
-        print(len(lines))
-    with open('../' + file, 'w+', encoding='UTF-8') as output:
-        output.writelines(lines)
+def check_same(file1, file2):
+    with open(file1, 'r', encoding='UTF-8') as f1:
+        d1 = f1.readlines()
 
+    with open(file2, 'r', encoding='UTF-8') as f2:
+        d2 = f2.readlines()
 
-for file in os.listdir('.'):
-    to_windows(file)
+    assert len(d1) == len(d2)
+    same = 0
+    for i in range(len(d1)):
+        if d1[i] == d2[i]:
+            same += 1
+
+    print(str(same / len(d1)) + "% is the same")

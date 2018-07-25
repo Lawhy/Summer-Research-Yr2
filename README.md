@@ -56,12 +56,20 @@ head -5 ch_tra.txt
 哈 纳 汉
 ```
 #### Feature vecotrs:
+- Script:
 ```
-Script: feature_vector/feature_vector.py
-Function: Generate all the feature vecotors based on the training data's features in .csv format
-Required: A directory named bs that stores the formatted data files: 
+feature_vector/feature_vector.py
+```
+- Function: 
+```
+Generate all the feature vecotors based on the training data's features in .csv format
+```
+- Required: 
+```
+A directory named bs that stores the formatted data files: 
     src_tra.txt, src_dev.txt, src_tst.txt, tgt_tra.txt, tgt_dev.txt, tgt_tst.txt
 ```
+- Usage:
 ```bash
 # args = {src_language src_features_type tgt_language tgt_features_type}
 # src/tgt_features_type choices: {
@@ -78,12 +86,21 @@ Please enter the directory where the required fvs files and original data files 
 ```
 
 #### Clustering: 
-``` 
-Script：feature_vecotr/clustering.py
-Function: Apply clustering on the training dataset, then predict clustering of the development and test dataset
-Required: a directory, say fvs_ch, that stores all the csv files generated from feature_vector.py, 
+
+- Script：
+```
+feature_vecotr/clustering.py
+```
+- Function: 
+```
+Apply clustering on the training dataset, then predict clustering of the development and test dataset
+```
+- Required: 
+```
+a directory, say fvs_ch, that stores all the csv files generated from feature_vector.py, 
 along with a sub-directory bs that stores the original data files.
 ```
+- Usage:
 ```bash
 # args = {src_language tgt_language algorithm clusters(optional)}
 # algorithm choices: {k-means} --- only k-means for now

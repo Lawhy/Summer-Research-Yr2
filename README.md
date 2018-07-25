@@ -46,8 +46,14 @@ pip install -r requirements.txt
 ---
 ### Using convenient scripts in NMT-py/scripts
 #### Prerequisites: 
- 1. Main Directory: main_dir=/disk/ocean/lhe/transliteration/nmt-py (You can change the value of main_dir in the bash scripts) <br />
- 2. OpenNMT-py in the Main Directory: main_dir/OpenNMT-py <br />
+ 1. Main Directory: (You can change the value of main_dir in the bash scripts) <br />
+ ```bash
+ main_dir=/disk/ocean/lhe/transliteration/nmt-py 
+ ```
+ 2. OpenNMT-py in the Main Directory:
+ ```bash
+ main_dir/OpenNMT-py <br />
+ ```
  3. Data Directory: main_dir/data <br />
 ![Alt text](data.svg)
  4. Virtual Environment (pytorch) for pytorch-0.4, CUDA 9, python2 <br />
@@ -66,11 +72,14 @@ pip install -r requirements.txt
  1. ez_training_script 
 ```bash
 # args = {$lan(language), $ann(annotation), $t_steps(training_steps), $lr(learning_rate), clusters...}
-# A script that serializes the whole process including proprocess.py train.py and translate.py for a single annotation of one language 
+# A script that serializes the whole process including proprocess.py train.py and translate.py 
+# for a single annotation of one language 
 # $lan choices: {ar ch he jp} 
 # $ann choices: {bs -+ +- ++}
-bash ez_training_script $lan $ann 15000 0.8 4 7 9 12
+bash ez_training_script ch +- 15000 0.8 4 7 9 12
 ```
+ 2. ez_training_script
+
 ---
 ### Individual Commands
 

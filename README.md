@@ -42,13 +42,20 @@ pip install -r requirements.txt
 ##### 6. Create a python3 virtual environment and install the [script](https://github.com/belambert/asr-evaluation) for checking character error rate
 ---
 ### Using convenient scripts in NMT-py/scripts
-#### Prerequisites: <br />
+#### Prerequisites: 
 ##### 1. Main Directory: main_dir=/disk/ocean/lhe/transliteration/nmt-py # You can change the value of main_dir in the bash scripts<br />
 ##### 2. OpenNMT-py in the Main Directory: main_dir/OpenNMT-py <br />
 ##### 3. Data Directory: main_dir/data <br />
 ![Alt text](data.svg)
 ##### 4. Virtual Environment for pytorch-0.4, CUDA 9, python2 <br />
 ##### 5. Virtual Environment for python3 which installs the script [here](https://github.com/belambert/asr-evaluation)<br />
+##### 6. main_dir/archive # This is optional, after each experiment is finished, move the directories: data, models, and best_results in it.
+
+#### Include:
+##### 1. ez_training_script (A script that 
+##### 2.
+##### 3.
+
 ---
 ### Individual Commands
 

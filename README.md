@@ -12,7 +12,7 @@ The details of this project is in the
 
 1. Download a usable Anaconda:
 
-```
+```python
 wget https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh
 ```
 
@@ -20,7 +20,7 @@ wget https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh
 
 3. Create conda environment, save the PATH, and activate:
 
-```
+```python
 conda create -n pytorch python=2.7
 source ~/.bashrc
 source activate pytorch
@@ -28,13 +28,13 @@ source activate pytorch
 
 4. Install Pytorch with CUDA-9:
 
-```
+```python
 conda install pytorch torchvision cuda91 -c pytorch
 ```
 
 5. Install openNMT-py and its dependency:
 
-```
+```python
 git clone https://github.com/OpenNMT/OpenNMT-py
 cd OpenNMT-py
 pip install -r requirements.txt
@@ -50,7 +50,7 @@ Prerequisites: <br />
 
 - Preprocess:
 
-```
+```python
 python PATH_FOR_OpenNMT/OpenNMT-py/preprocess.py
 -train_src data/en_tra.txt
 -train_tgt data/ch_tra.txt
@@ -62,7 +62,7 @@ python PATH_FOR_OpenNMT/OpenNMT-py/preprocess.py
 - Training:
 (Assume: cur_directory=/disk/ocean/lhe/en2chi/nmt-py/models/bs)
 
-```
+```python
 python PATH_FOR_OpenNMT/OpenNMT-py/train.py
 -data data/DEMO # Any name generated from the preprocessing
 -save_model MODEL # suggested naming: bs(baseline) or {2 4 5 7 9 10 12 15}(cluster number)
@@ -79,7 +79,7 @@ python PATH_FOR_OpenNMT/OpenNMT-py/train.py
 
 - Translate:
 
-```
+```python
 for i in {checkpoint_start_NUMBER..checkpoint_end_NUMBER..checkpoint_save_STEPS}
 do
 python PATH_FOR_OpenNMT/OpenNMT-py/translate.py
@@ -93,7 +93,7 @@ done
 ```
 - check WER: 
 (Get wer.py from NMT-py directory)
-```
+```python
 # (In python3 venv)
 for i in {checkpoint_start_NUMBER..checkpoint_end_NUMBER..checkpoint_save_STEPS}; 
 do 

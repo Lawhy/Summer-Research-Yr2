@@ -44,7 +44,7 @@ Prerequisites: <br />
 1. Main Directory: main_dir=/disk/ocean/lhe/transliteration/nmt-py # You can change the value of main_dir in the bash scripts<br />
 2. OpenNMT-py in the Main Directory: main_dir/OpenNMT-py <br />
 3. Data Directory: main_dir/data # in the following format<br />
-![Alt text](data.pdf)
+![Alt text](data.svg)
 
 ### Individual Commands
 

@@ -1,8 +1,8 @@
 # Transliteration
 This is a summer project regarding to the problem set of multi-lingual transliteration. <br />
 The project is initialized and supervised by Shay Cohen and Joana Ribeiro from the NLP group of the University of Edinburgh.<br />
-The details of this project is in the report file: <br />
-https://docs.google.com/document/d/1XQTABQMb8yKXFJmztmp0CIdFN2FmdXLmDAEXUzzUbMI/edit?usp=sharing<br />
+The details of this project is in the 
+[report file](https://docs.google.com/document/d/1XQTABQMb8yKXFJmztmp0CIdFN2FmdXLmDAEXUzzUbMI/edit?usp=sharing)<br />
 
 ---
 
@@ -39,8 +39,14 @@ git clone https://github.com/OpenNMT/OpenNMT-py
 cd OpenNMT-py
 pip install -r requirements.txt
 ```
+### Using convenient scripts in NMT-py/scripts
+Prerequisites: <br />
+1. Main Directory: main_dir=/disk/ocean/lhe/transliteration/nmt-py # You can change the value of main_dir in the bash scripts<br />
+2. OpenNMT-py in the Main Directory: main_dir/OpenNMT-py <br />
+3. Data Directory: main_dir/data # in the following format<br />
 
-### Commands
+
+### Individual Commands
 
 - Preprocess:
 
@@ -50,6 +56,7 @@ python PATH_FOR_OpenNMT/OpenNMT-py/preprocess.py
 -train_tgt data/ch_tra.txt
 -valid_src data/en_dev.txt
 -valid_tgt data/ch_dev.txt
+-save_data data/DEMO # suggested naming: bs(baseline) or {2 4 5 7 9 10 12 15}(cluster number)
 ```
 
 - Training:
@@ -57,17 +64,17 @@ python PATH_FOR_OpenNMT/OpenNMT-py/preprocess.py
 
 ```
 python PATH_FOR_OpenNMT/OpenNMT-py/train.py
--data data/bs
--save_model bs
--train_steps 12500
+-data data/DEMO # Any name generated from the preprocessing
+-save_model MODEL # suggested naming: bs(baseline) or {2 4 5 7 9 10 12 15}(cluster number)
+-train_steps 15000 
 -seed 7
 -start_decay_step 8000
 -save_checkpoint_steps 100
 -keep_checkpoint 10
 -decay_steps 1000
--gpuid 1
 -learning_rate 0.8
-
+-gpuid 1
+-log_file logs/DEMO.log # Save the training details
 ```
 
 - Translate:

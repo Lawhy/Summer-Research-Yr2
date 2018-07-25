@@ -50,15 +50,15 @@ pip install -r requirements.txt
  ```bash
  main_dir=/disk/ocean/lhe/transliteration/nmt-py 
  ```
- 2. OpenNMT-py in the Main Directory:
+ 2. OpenNMT-py in the Main Directory: <br />
  ```bash
  main_dir/OpenNMT-py
  ```
- 3. Data Directory:
+ 3. Data Directory: <br />
  ```bash
- main_dir/data <br />
+ main_dir/data 
  ```
-![Alt text](data.svg)
+![Alt text](data.svg) <br />
  4. Virtual Environment (pytorch) for pytorch-0.4, CUDA 9, python2 <br />
  5. Virtual Environment (venv-py3) for python3 which installs the script [here](https://github.com/belambert/asr-evaluation)<br />
  6. Archive everything (This is optional, after each experiment is finished, move the directories: data, models, and best_results in it)
@@ -80,10 +80,32 @@ pip install -r requirements.txt
 # A script that serializes the whole process including proprocess.py train.py and translate.py 
 # for a single annotation of one language 
 # $lan choices: {ar ch he jp} 
-# $ann choices: {bs -+ +- ++}
+# $ann choices: {bs -+ +- ++} 
 bash ez_training_script ch +- 15000 0.8 4 7 9 12
 ```
- 2. ez_training_script
+ 2. all_in
+ ```bash
+ # A script that takes ez_training_script into a for-loop
+ nano all_in
+ # change the parameters you want
+ bash all_in
+ ```
+ 3. infer_scripts/err
+ ```bash
+ # args = {$lan(language), $t_steps(training_steps), $cls(current cluster or bs)}
+ # activate venv-py3
+ # The ez_training_script will copy err, wer.py, cer.py to 
+ # $main_dir/models/$lan/bs/infer and $main_dir/models/$lan/$ann/$cls/infer
+ # cd to each directory after the whole training is down
+ # e.g.
+ main_dir=/disk/ocean/lhe/transliteration/nmt-py
+ cd $main_dir/models/ch/bs
+ bash err ch 15000 bs
+ # e.g.
+ main_dir=/disk/ocean/lhe/transliteration/nmt-py
+ cd $main_dir/models/ch/m+-/2
+ bash err ch 15000 2
+ ```
 
 ---
 ### Individual Commands

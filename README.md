@@ -39,6 +39,8 @@ git clone https://github.com/OpenNMT/OpenNMT-py
 cd OpenNMT-py
 pip install -r requirements.txt
 ```
+##### 6. Create a python3 virtual environment and install the [script](https://github.com/belambert/asr-evaluation) for checking character error rate
+---
 ### Using convenient scripts in NMT-py/scripts
 #### Prerequisites: <br />
 ##### 1. Main Directory: main_dir=/disk/ocean/lhe/transliteration/nmt-py # You can change the value of main_dir in the bash scripts<br />
@@ -47,7 +49,7 @@ pip install -r requirements.txt
 ![Alt text](data.svg)
 ##### 4. Virtual Environment for pytorch-0.4, CUDA 9, python2 <br />
 ##### 5. Virtual Environment for python3 which installs the script [here](https://github.com/belambert/asr-evaluation)<br />
-
+---
 ### Individual Commands
 
 ##### - Preprocess:

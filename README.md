@@ -41,7 +41,87 @@ pip install -r requirements.txt
 ```
 ##### 6. Create a python3 virtual environment and install the [script](https://github.com/belambert/asr-evaluation) for checking character error rate
 ---
-### Data Generation
+### Data Clustering
+#### Prerequisites: 
+1. Source language data files: src_tra.txt, src_dev.txt, src_tst.txt
+2. Target language data files: tgt_tra.txt, tgt_dev.txt, tgt_tst.txt
+3. Format: One word per line, characters are separated by a space.
+```bash
+# e.g.
+head -5 ch_tra.txt
+古 尔 蒂
+惠 特 里 奇
+珀 西 亚 塞 普
+霍 利 菲 尔 德
+哈 纳 汉
+```
+#### Feature vecotrs:
+- Script:
+```
+feature_vector/feature_vector.py
+```
+- Function: 
+```
+Generate all the feature vecotors based on the training data's features in .csv format
+```
+- Required: 
+```
+A directory named bs that stores the formatted data files: 
+    src_tra.txt, src_dev.txt, src_tst.txt, tgt_tra.txt, tgt_dev.txt, tgt_tst.txt
+```
+- Usage:
+```bash
+# args = {src_language src_features_type tgt_language tgt_features_type}
+# src/tgt_features_type choices: {
+#        "L": [L_unigram], "R": [R_unigram],
+#        "LR": [L_unigram ; R_unigram],
+#        "bLR": [LR_bigram],
+#        "LRbLR": [L_unigram ; R_unigram ; LR_bigram]
+#        }
+# additional IPA features: for Chinese data only.
+# e.g.
+python feature_vector.py en LR ch LR 
+Please enter the directory where the required fvs files and original data files exist
+---> data/ch/bs
+```
+
+#### Clustering: 
+
+- Script：
+```
+feature_vecotr/clustering.py
+```
+- Function: 
+```
+Apply clustering on the training dataset, then predict clustering of the development and test dataset
+```
+- Required: 
+```
+a directory, say fvs_ch, that stores all the csv files generated from feature_vector.py, 
+along with a sub-directory bs that stores the original data files.
+```
+- Usage:
+```bash
+# args = {src_language tgt_language algorithm clusters(optional)}
+# algorithm choices: {k-means} --- only k-means for now
+# clusters could be a sequence of intergers >= 2. DEFAULT: 2 5 10 15
+# e.g. 
+python clustering.py en ch k-means 2 4 5 7 9 10 12 15
+Please enter the directory where the required fvs files and original data files exist
+---> fvs_ch
+```
+As a result, we now have all the data files needed for training.
+```
+# e.g.
+en_tra_2cls.txt
+ch_tra_2cls.txt
+en_dev_2cls.txt
+ch_dev_2cls.txt
+en_tst_2cls.txt
+ch_tst_2cls.txt
+...
+```
+If you want to use the scripts described below, move your data to the corresponding directory as shown in the diagram.
 
 ---
 ### Using convenient scripts in NMT-py/scripts

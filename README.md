@@ -46,24 +46,24 @@ pip install -r requirements.txt
 ---
 ### Using convenient scripts in NMT-py/scripts
 #### Prerequisites: 
-##### 1. Main Directory: main_dir=/disk/ocean/lhe/transliteration/nmt-py (You can change the value of main_dir in the bash scripts) <br />
-##### 2. OpenNMT-py in the Main Directory: main_dir/OpenNMT-py <br />
-##### 3. Data Directory: main_dir/data <br />
+ 1. Main Directory: main_dir=/disk/ocean/lhe/transliteration/nmt-py (You can change the value of main_dir in the bash scripts) <br />
+ 2. OpenNMT-py in the Main Directory: main_dir/OpenNMT-py <br />
+ 3. Data Directory: main_dir/data <br />
 ![Alt text](data.svg)
-##### 4. Virtual Environment (pytorch) for pytorch-0.4, CUDA 9, python2 <br />
-##### 5. Virtual Environment (venv-py3) for python3 which installs the script [here](https://github.com/belambert/asr-evaluation)<br />
-##### 6. main_dir/archive (This is optional, after each experiment is finished, move the directories: data, models, and best_results in it)
+ 4. Virtual Environment (pytorch) for pytorch-0.4, CUDA 9, python2 <br />
+ 5. Virtual Environment (venv-py3) for python3 which installs the script [here](https://github.com/belambert/asr-evaluation)<br />
+ 6. main_dir/archive (This is optional, after each experiment is finished, move the directories: data, models, and best_results in it)
 
 #### Include:
-##### 1. ez_training_script (In pytorch env)
-##### 2. all_in (In pytorch env)
-##### 3. infer_scripts/test_script (In pytorch env)
-##### 4. infer_scripts/err (In venv-py3 env)
-##### 5. infer_scripts/wer.py (In venv-py3 env)
-##### 6. infer_scripts/cer.py (In venv-py3 env)
+ 1. ez_training_script (In pytorch env)
+ 2. all_in (In pytorch env)
+ 3. infer_scripts/test_script (In pytorch env)
+ 4. infer_scripts/err (In venv-py3 env)
+ 5. infer_scripts/wer.py (In venv-py3 env)
+ 6. infer_scripts/cer.py (In venv-py3 env)
 
 #### Usage:
-##### 1. ez_training_script 
+ 1. ez_training_script 
 ```bash
 # args = {$lan(language), $ann(annotation), $t_steps(training_steps), $lr(learning_rate), clusters...}
 # A script that serializes the whole process including proprocess.py train.py and translate.py for a single annotation of one language 

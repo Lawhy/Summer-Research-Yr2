@@ -38,7 +38,7 @@ def feature_vector(filename, classes, fv_type="LR", ipa_feature=False):
         "bLR": [LR_bigram],
         "LRbLR": [L_unigram ; R_unigram ; LR_bigram]
         }
-    :return:
+    :return: a csv file storing the feature vectors for every character in the input data file
     """
 
     cl_left = [cl for cl in classes if not cl == '$']  # '$' cannot appear in the left context

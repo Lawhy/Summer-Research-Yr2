@@ -5,29 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8f8c2877-7fe6-42fe-a976-ccac5a32e116" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/NMT-py/exp1/convert.py" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/NMT-py/scripts/ez_training_script" afterPath="$PROJECT_DIR$/NMT-py/scripts/ez_training_script" />
-      <change beforePath="$PROJECT_DIR$/NMT-py/scripts/ez_training_script.txt" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/NMT-py/scripts/infer_scripts/err" afterPath="$PROJECT_DIR$/NMT-py/scripts/infer_scripts/err" />
-      <change beforePath="$PROJECT_DIR$/NMT-py/scripts/infer_scripts/err.txt" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/feature_vector/clustering.py" afterPath="$PROJECT_DIR$/feature_vector/clustering.py" />
-      <change beforePath="$PROJECT_DIR$/feature_vector/data1/setting1.txt" afterPath="$PROJECT_DIR$/feature_vector/data1/setting1.txt" />
-      <change beforePath="$PROJECT_DIR$/feature_vector/data2/ar/10cls/ar_dev_10cls.txt" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/feature_vector/data2/ar/10cls/ar_tra_10cls.txt" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/feature_vector/data2/ar/10cls/ar_tst_10cls.txt" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/feature_vector/data2/ar/15cls/ar_dev_15cls.txt" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/feature_vector/data2/ar/15cls/ar_tra_15cls.txt" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/feature_vector/data2/ar/15cls/ar_tst_15cls.txt" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/feature_vector/data2/ar/2cls/ar_dev_2cls.txt" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/feature_vector/data2/ar/2cls/ar_tra_2cls.txt" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/feature_vector/data2/ar/2cls/ar_tst_2cls.txt" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/feature_vector/data2/ar/5cls/ar_dev_5cls.txt" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/feature_vector/data2/ar/5cls/ar_tra_5cls.txt" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/feature_vector/data2/ar/5cls/ar_tst_5cls.txt" afterPath="" />
       <change beforePath="$PROJECT_DIR$/feature_vector/feature_vector.py" afterPath="$PROJECT_DIR$/feature_vector/feature_vector.py" />
-      <change beforePath="$PROJECT_DIR$/feature_vector/fvs_ar/ar2en_fvs1.rar" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/feature_vector/fvs_ar/ar2en_fvs2.rar" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/feature_vector/fvs_ar/ar_dev_fvs.csv" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/feature_vector/fvs_ar/ar_tra_fvs.csv" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/feature_vector/fvs_ar/ar_tst_fvs.csv" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/feature_vector/fvs_ar/en_dev_fvs.csv" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/feature_vector/fvs_ar/en_tra_fvs.csv" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/feature_vector/fvs_ar/en_tst_fvs.csv" afterPath="" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -41,8 +25,8 @@
       <file leaf-file-name="clustering.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/feature_vector/clustering.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-673">
-              <caret line="183" column="18" lean-forward="false" selection-start-line="183" selection-start-column="18" selection-end-line="183" selection-end-column="18" />
+            <state relative-caret-position="112">
+              <caret line="212" column="112" lean-forward="false" selection-start-line="212" selection-start-column="21" selection-end-line="212" selection-end-column="112" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -50,10 +34,20 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="analyse.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="feature_vector.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/feature_vector/feature_vector.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-5010">
+              <caret line="34" column="57" lean-forward="true" selection-start-line="34" selection-start-column="57" selection-end-line="39" selection-end-column="9" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="analyse.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/NMT-py/analyse/analyse.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="349">
+            <state relative-caret-position="659">
               <caret line="82" column="14" lean-forward="false" selection-start-line="82" selection-start-column="14" selection-end-line="82" selection-end-column="14" />
               <folding />
             </state>
@@ -97,14 +91,14 @@
         <option value="$PROJECT_DIR$/feature_vector/fvs_ar/clustering.py" />
         <option value="$PROJECT_DIR$/feature_vector/lower.py" />
         <option value="$PROJECT_DIR$/feature_vector/data/ar/bs/lower.py" />
-        <option value="$PROJECT_DIR$/feature_vector/feature_vector.py" />
         <option value="$PROJECT_DIR$/feature_vector/clustering.py" />
         <option value="$PROJECT_DIR$/NMT-py/exp1/analyse.py" />
         <option value="$PROJECT_DIR$/NMT-py/analyse/analyse.py" />
+        <option value="$PROJECT_DIR$/feature_vector/feature_vector.py" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="953" />
     <option name="width" value="974" />
     <option name="height" value="1047" />
@@ -124,14 +118,17 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
               <item name="Transliteration" type="b2602c69:ProjectViewProjectNode" />
               <item name="Transliteration" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Transliteration" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Transliteration" type="462c0819:PsiDirectoryNode" />
+              <item name="feature_vector" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Transliteration" type="b2602c69:ProjectViewProjectNode" />
@@ -148,6 +145,8 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -291,7 +290,8 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
+    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.12916666" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -324,6 +324,24 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/feature_vector/clustering.py">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4758">
+          <caret line="183" column="18" lean-forward="false" selection-start-line="183" selection-start-column="18" selection-end-line="183" selection-end-column="18" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/NMT-py/analyse/analyse.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2132">
+          <caret line="82" column="14" lean-forward="false" selection-start-line="82" selection-start-column="14" selection-end-line="82" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/feature_vector/clustering.py">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
@@ -336,9 +354,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="6136">
           <caret line="243" column="0" lean-forward="false" selection-start-line="243" selection-start-column="0" selection-end-line="243" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#10#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -356,9 +372,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="858">
           <caret line="40" column="12" lean-forward="false" selection-start-line="40" selection-start-column="12" selection-end-line="40" selection-end-column="12" />
-          <folding>
-            <element signature="e#0#10#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -458,46 +472,30 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/feature_vector/data/ar/bs/lower.py" />
-    <entry file="file://$PROJECT_DIR$/NMT-py/exp1/convert.py">
+    <entry file="file://$PROJECT_DIR$/NMT-py/exp1/convert.py" />
+    <entry file="file://$PROJECT_DIR$/NMT-py/exp1/analyse.py" />
+    <entry file="file://$PROJECT_DIR$/NMT-py/analyse/analyse.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-304">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/feature_vector/feature_vector.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="424">
-          <caret line="243" column="0" lean-forward="false" selection-start-line="243" selection-start-column="0" selection-end-line="243" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#10#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/NMT-py/exp1/analyse.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="659">
+          <caret line="82" column="14" lean-forward="false" selection-start-line="82" selection-start-column="14" selection-end-line="82" selection-end-column="14" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/feature_vector/clustering.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-673">
-          <caret line="183" column="18" lean-forward="false" selection-start-line="183" selection-start-column="18" selection-end-line="183" selection-end-column="18" />
+        <state relative-caret-position="112">
+          <caret line="212" column="112" lean-forward="false" selection-start-line="212" selection-start-column="21" selection-end-line="212" selection-end-column="112" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/NMT-py/analyse/analyse.py">
+    <entry file="file://$PROJECT_DIR$/feature_vector/feature_vector.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="349">
-          <caret line="82" column="14" lean-forward="false" selection-start-line="82" selection-start-column="14" selection-end-line="82" selection-end-column="14" />
+        <state relative-caret-position="-5010">
+          <caret line="34" column="57" lean-forward="true" selection-start-line="34" selection-start-column="57" selection-end-line="39" selection-end-column="9" />
           <folding />
         </state>
       </provider>

@@ -10,15 +10,15 @@ The details of this project is in the
 
 ### Setup
 
-1. Download a usable Anaconda:
+##### 1. Download a usable Anaconda:
 
 ```bash
 wget https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh
 ```
 
-2. Bash it and remember to store it in somewhere with enough space (e.g. /disk/ocean)
+##### 2. Bash it and remember to store it in somewhere with enough space (e.g. /disk/ocean)
 
-3. Create conda environment, save the PATH, and activate:
+##### 3. Create conda environment, save the PATH, and activate:
 
 ```bash
 conda create -n pytorch python=2.7
@@ -26,13 +26,13 @@ source ~/.bashrc
 source activate pytorch
 ```
 
-4. Install Pytorch with CUDA-9:
+##### 4. Install Pytorch with CUDA-9:
 
 ```bash
 conda install pytorch torchvision cuda91 -c pytorch
 ```
 
-5. Install openNMT-py and its dependency:
+##### 5. Install openNMT-py and its dependency:
 
 ```bash
 git clone https://github.com/OpenNMT/OpenNMT-py
@@ -50,7 +50,7 @@ pip install -r requirements.txt
 
 ### Individual Commands
 
-- Preprocess:
+##### - Preprocess:
 
 ```bash
 python PATH_FOR_OpenNMT/OpenNMT-py/preprocess.py
@@ -61,7 +61,7 @@ python PATH_FOR_OpenNMT/OpenNMT-py/preprocess.py
 -save_data data/DEMO # suggested naming: bs(baseline) or {2 4 5 7 9 10 12 15}(cluster number)
 ```
 
-- Training:
+##### - Training:
 (Assume: cur_directory=/disk/ocean/lhe/en2chi/nmt-py/models/bs)
 
 ```bash
@@ -79,7 +79,7 @@ python PATH_FOR_OpenNMT/OpenNMT-py/train.py
 -log_file logs/DEMO.log # Save the training details
 ```
 
-- Translate:
+##### - Translate:
 
 ```bash
 for i in {checkpoint_start_NUMBER..checkpoint_end_NUMBER..checkpoint_save_STEPS}
@@ -93,7 +93,7 @@ python PATH_FOR_OpenNMT/OpenNMT-py/translate.py
 -gpu 1
 done
 ```
-- check WER: 
+##### - check WER: 
 (Get wer.py from NMT-py directory)
 ```bash
 # (In python3 venv)
@@ -103,7 +103,7 @@ do
    echo $i; 
 done
 ```
-- check CER:
+##### - check CER:
 Use the script [here](https://github.com/belambert/asr-evaluation)
 And do similar for-loop as above.
 

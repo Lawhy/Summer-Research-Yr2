@@ -34,9 +34,9 @@ def feature_vector(filename, classes, fv_type="LR", ipa_feature=False):
     :param ipa_feature: Only supports Chinese data for now
     :param fv_type: Type of feature vectors, choices are {
         "L": [L_unigram], "R": [R_unigram],
-        "LR": [L_unigram ; R_unigram], (enabled)
-        "bLR": [LR_bigram], (working on)
-        "LRbLR": [L_unigram ; R_unigram ; LR_bigram] (working on)
+        "LR": [L_unigram ; R_unigram],
+        "bLR": [LR_bigram],
+        "LRbLR": [L_unigram ; R_unigram ; LR_bigram]
         }
     :return:
     """

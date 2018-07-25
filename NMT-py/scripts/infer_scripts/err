@@ -27,6 +27,7 @@ if [ $lan = "ar" ]
 then
    cp $main_dir/data/$lan/bs/en_dev.txt .
    cp $main_dir/data/$lan/bs/en_tst.txt .
+   lan=en
 fi
 
 # -----WER-------  

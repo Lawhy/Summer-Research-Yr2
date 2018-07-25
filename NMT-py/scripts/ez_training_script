@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e
 
 <<'COMMENT'
 This script enables easy running of preprocess-to-train-to-translate process
@@ -38,23 +39,43 @@ COMMENT
 
 main_dir=/disk/ocean/lhe/transliteration/nmt-py # Change this to your working directory
                                                 # OpenNMT and data must be included in this directory
-
-echo "Language: {ar ch he jp}"
-read lan
+# 1st argument: language
+lan=$1
+echo "choose $lan from {ar ch he jp}"
 cd $main_dir/data/$lan/
 cat direction.txt
-echo ""
-echo "What model do you want? {bs -+ +- ++}"
-read ann
-echo "How many training steps?"
-read t_steps
-echo "Learning rate:"
-read l_rate
+shift
+
+# 2nd argument model
+ann=$1
+echo "Choose $ann from {bs -+ +- ++}"
+shift
+
+# 3rd argument training steps
+t_steps=$1
+echo "Training steps: $t_steps"
+shift
+
+# 4th argument learning rate
+l_rate=$1
+echo "Initial learning rate: $l_rate"
+shift
+
+# The rest of arguments are clusters
+clusters=()
+for c in "$@"
+do
+clusters+=("$c")
+done 
+echo "Clusters are: ${clusters[*]}"
+
 
 # make a new main working directory after each setting is archived
-mkdir $main_dir/models
-mkdir $main_dir/models/$lan
-mkdir $main_dir/models/logs
+mkdir -p $main_dir/models
+mkdir -p $main_dir/models/$lan
+mkdir -p $main_dir/models/logs
+mkdir -p $main_dir/models/logs/$lan
+
 
 # Assign source and target languages
 src="en"
@@ -74,9 +95,9 @@ if [ $ann = "bs" ]
 then
  cd $main_dir/data/$lan/
  # Create necessary directories
- mkdir $main_dir/models/$lan/$ann
- mkdir $main_dir/models/$lan/$ann/data
- mkdir $main_dir/models/$lan/$ann/infer
+ mkdir -p $main_dir/models/$lan/$ann
+ mkdir -p $main_dir/models/$lan/$ann/data
+ mkdir -p $main_dir/models/$lan/$ann/infer
  cp -r bs/* $main_dir/models/$lan/$ann/data/
 
  # Go to the model directory
@@ -112,18 +133,21 @@ then
   -verbose \
   -gpu 1
  done
+ echo "Finish!"
+ cp -r /disk/ocean/lhe/transliteration/nmt-py/scripts/infer_scripts/* infer
 fi
 
 if [ $ann != "bs" ]
 then
  mkdir $main_dir/models/$lan/"m$ann"
  # Create necessary directories
- for i in {2,5,10,15}
+ for i in ${clusters[*]}
  do
+   echo "The current cluster is: $i"
    cd $main_dir/data/$lan/
-   mkdir $main_dir/models/$lan/"m$ann"/$i
-   mkdir $main_dir/models/$lan/"m$ann"/$i/data
-   mkdir $main_dir/models/$lan/"m$ann"/$i/infer
+   mkdir -p $main_dir/models/$lan/"m$ann"/$i
+   mkdir -p $main_dir/models/$lan/"m$ann"/$i/data
+   mkdir -p $main_dir/models/$lan/"m$ann"/$i/infer
    # To the {2 5 10 15} cls and copy to the corresponding model dir
    dp=$i
    dp+="cls"
@@ -180,11 +204,15 @@ then
      -verbose \
      -gpu 1;
    done
+   # Copy the infer scripts to the infer directory
+   cp -r /disk/ocean/lhe/transliteration/nmt-py/scripts/infer_scripts/* infer
    echo "Finish!"
  done
 fi
 
-
+echo "Create best_results"
+mkdir -p $main_dir/best_results
+mkdir -p $main_dir/best_results/$lan
 
 
 

@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+set -e
+echo "ALL IN!"
+# Main tune clusters
+# and fvs (outside)
+lans=(ch jp) # Include any language you want from {ch jp he ar}
+anns=(-+ +- ++) #Baseline no need as already created
+
+for lan in ${lans[*]}
+do
+    for ann in ${anns[*]}
+    do  
+        bash ez_training_script $lan $ann 15000 0.8 4 7 9 12
+    done
+done

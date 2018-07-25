@@ -1,0 +1,16 @@
+ez_training_script lan m_ann t_steps l_rate clusters...
+
+
+ python $main_dir/OpenNMT-py/translate.py \
+     -model $i$step$j.pt \
+     -src data/*$src$dev* \
+     -output infer/$i$development$j.txt \
+     -replace_unk \
+     -verbose \
+     -gpu 1;
+
+test_script lan clusters...
+
+#!/usr/bin/env bash
+
+                                               

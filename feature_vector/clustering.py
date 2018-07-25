@@ -6,6 +6,7 @@ import re
 import os
 import sys
 
+
 # load the feature vectors data
 def load_fv(lan, tra_or_dev_or_tst):
     with open(lan + '_' + tra_or_dev_or_tst + '_' + 'fvs.csv', 'r', encoding='UTF-8-sig') as inp:
@@ -145,7 +146,7 @@ def clustering(lan, n_clusters, smooth=False, threshold=3, delimiter=u'￨', alg
         # print(len(set(words)))
 
         # load the original data for word alignment (prevent consecutive duplicates)
-        with open(lan + '_' + title + '.txt', 'r', encoding='UTF-8-sig') as data:
+        with open("./bs/" + lan + '_' + title + '.txt', 'r', encoding='UTF-8-sig') as data:
             dictionary = [word.replace('\n', '').replace(' ', '') for word in data.readlines()]
 
         with open(lan + '_' + title + '_' + str(n_clusters) + 'cls.txt', 'w+', encoding='UTF-8') as output:
@@ -212,13 +213,16 @@ if __name__ == '__main__':
     fvs_dir = input("Please enter the directory where the required fvs files and original data files exist\n--->  ")
     os.chdir(fvs_dir)
 
+    print("The arguments are: src_language, tgt_language, algorithm, sequence of clusters(optional)")
+
     if len(sys.argv) == 1:  # Use within the idk
         clustering_all('en', 'tgt', 'spectral')
     elif len(sys.argv) == 4:  # Use in command lines
         algorithm = sys.argv[3]
         print(algorithm + " clustering is applied.")
         print("Default clusters: " + "[2, 5, 10, 15]")
-        clustering_all(sys.argv[1], sys.argv[2], sys.argv[3])
+        clustering_all(sys.argv[1], 'src', sys.argv[3])
+        clustering_all(sys.argv[2], 'tgt', sys.argv[3])
     elif len(sys.argv) >= 5:  # Use in command lines
         algorithm = sys.argv[3]
         print(algorithm + " clustering is applied.")
@@ -226,6 +230,7 @@ if __name__ == '__main__':
         for i in range(4, len(sys.argv)):
             clusters.append(int(sys.argv[i]))
         print("Customized clusters: " + str(clusters))
-        clustering_all(sys.argv[1], sys.argv[2], sys.argv[3], clusters)
+        clustering_all(sys.argv[1], 'src', sys.argv[3], clusters)
+        clustering_all(sys.argv[2], 'tgt', sys.argv[3], clusters)
 
 

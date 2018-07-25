@@ -76,7 +76,8 @@ pip install -r requirements.txt
 #### Usage:
  1. ez_training_script 
 ```bash
-# args = {$lan(language), $ann(annotation), $t_steps(training_steps), $lr(learning_rate), clusters...}
+# args = {$lan(language), $ann(annotation), $t_steps(training_steps), $lr(learning_rate), a sequence of $cluster_number}
+# activate pytorch
 # A script that serializes the whole process including proprocess.py train.py and translate.py 
 # for a single annotation of one language 
 # $lan choices: {ar ch he jp} 
@@ -86,13 +87,14 @@ bash ez_training_script ch +- 15000 0.8 4 7 9 12
  2. all_in
  ```bash
  # A script that takes ez_training_script into a for-loop
+ # activate pytorch
  nano all_in
  # change the parameters you want
  bash all_in
  ```
  3. infer_scripts/err
  ```bash
- # args = {$lan(language), $t_steps(training_steps), $cls(current cluster or bs)}
+ # args = {$lan(language), $t_steps(training_steps), $cls(current cluster number or bs)}
  # activate venv-py3
  # The ez_training_script will copy err, wer.py, cer.py to 
  # $main_dir/models/$lan/bs/infer and $main_dir/models/$lan/$ann/$cls/infer
@@ -101,10 +103,41 @@ bash ez_training_script ch +- 15000 0.8 4 7 9 12
  main_dir=/disk/ocean/lhe/transliteration/nmt-py
  cd $main_dir/models/ch/bs
  bash err ch 15000 bs
+ cat wer.txt # to see WER results
+ cat cer-clean.txt # to see CER results
  # e.g.
  main_dir=/disk/ocean/lhe/transliteration/nmt-py
  cd $main_dir/models/ch/m+-/2
  bash err ch 15000 2
+ cat wer.txt # to see WER results
+ cat cer-clean.txt # to see CER results
+ ```
+ 4. test_script
+ ```bash
+ # args = {$lan(language), a sequence of $cls (no need for bs))
+ # A script that generates the predictions files for the test dataset using the best checkpoints 
+ # You need to input the best checkpoints
+ # activate pytorch
+ # e.g.
+ bash test_script ch 2 5 10 15
+ ...
+ Best checkpoint_step for bs:
+ 12000 # If baseline results has been generated in the previous experiment, put -1 here
+ Best checkpoint_setps in m-+ are:
+ For cluster 2
+ 12000
+ For cluster 5
+ 12000
+ For cluster 10
+ 12000
+ For cluster 12
+ 12000
+ ... # Generating test files for all the clusters in m-+ using the input checkpoints
+ Best checkpoint_setps in m+- are:
+ ... # Same
+ Best checkpoint_setps in m++ are:
+ ... # Same
+ ALL FINISH!
  ```
 
 ---

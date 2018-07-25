@@ -76,19 +76,21 @@ do
     echo "$i FINISH!"
 done
 
-# Translate test file with the best ckp
-# For baseline
-cd $main_dir/models/$lan/bs
-python $main_dir/OpenNMT-py/translate.py \
--model bs_step_$bst.pt \
--src data/*$src$_tst* \
--output infer/bs$_tst_$bst.txt \
--replace_unk \
--verbose \
--gpu 1;
+# Translate test file with the best ckp for baseline
+# if $bst=-1, meaning that baseline data has been generated, no need to re-testing.
+if [ $bst -ne -1 ]
+then
+    cd $main_dir/models/$lan/bs
+    python $main_dir/OpenNMT-py/translate.py \
+    -model bs_step_$bst.pt \
+    -src data/*$src$_tst* \
+    -output infer/bs$_tst_$bst.txt \
+    -replace_unk \
+    -verbose \
+    -gpu 1;
 
-cd infer
-mkdir $main_dir/best_results/$lan/bs
-cp -r *$bst* $main_dir/best_results/$lan/bs
-
+    cd infer
+    mkdir $main_dir/best_results/$lan/bs
+    cp -r *$bst* $main_dir/best_results/$lan/bs
+fi
 echo "ALL FINISH!"

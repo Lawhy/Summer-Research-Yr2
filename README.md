@@ -187,7 +187,7 @@ python PATH_FOR_OpenNMT/OpenNMT-py/translate.py
 done
 ```
 ##### - check WER: 
-(nmt-py/scripts/infer_scripts/wer.txt)
+(nmt-py/scripts/infer_scripts/wer.py)
 ```bash
 # (In python3 venv)
 for i in {checkpoint_start_NUMBER..checkpoint_end_NUMBER..checkpoint_save_STEPS}; 

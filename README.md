@@ -40,11 +40,13 @@ cd OpenNMT-py
 pip install -r requirements.txt
 ```
 ### Using convenient scripts in NMT-py/scripts
-Prerequisites: <br />
-1. Main Directory: main_dir=/disk/ocean/lhe/transliteration/nmt-py # You can change the value of main_dir in the bash scripts<br />
-2. OpenNMT-py in the Main Directory: main_dir/OpenNMT-py <br />
-3. Data Directory: main_dir/data # in the following format<br />
+#### Prerequisites: <br />
+##### 1. Main Directory: main_dir=/disk/ocean/lhe/transliteration/nmt-py # You can change the value of main_dir in the bash scripts<br />
+##### 2. OpenNMT-py in the Main Directory: main_dir/OpenNMT-py <br />
+##### 3. Data Directory: main_dir/data <br />
 ![Alt text](data.svg)
+##### 4. Virtual Environment for pytorch-0.4, CUDA 9, python2 <br />
+##### 5. Virtual Environment for python3 which installs the script [here](https://github.com/belambert/asr-evaluation)<br />
 
 ### Individual Commands
 
@@ -102,7 +104,7 @@ do
 done
 ```
 - check CER:
-Use the script here: https://github.com/belambert/asr-evaluation
+Use the script [here](https://github.com/belambert/asr-evaluation)
 And do similar for-loop as above.
 
 ### Citation

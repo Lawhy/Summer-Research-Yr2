@@ -1,13 +1,19 @@
 #!/usr/bin/env bash
 # Must be used in the infer directory
 
-echo "Language:"
-read lan 
-echo "Training steps:"
-read t_steps
+
+lan=$1
+shift
+echo "Language: $lan"
+
+t_steps=$1
+shift
+echo "Training steps: $t_steps"
+
 let i=t_steps-900
-echo "Clusters: {bs 2 5 10 15}"
-read cls
+cls=$1
+shift
+echo "Cluster: $cls"
 
 main_dir=/disk/ocean/lhe/transliteration/nmt-py #The same main dir as in the ez-training script
 

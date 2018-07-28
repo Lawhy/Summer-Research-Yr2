@@ -4,11 +4,7 @@
     <bookmark url="file://$PROJECT_DIR$/NMT-py/analyse/analyse.py" line="27" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8f8c2877-7fe6-42fe-a976-ccac5a32e116" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/NMT-py/scripts/infer_scripts/bst_ckp.py" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/NMT-py/scripts/infer_scripts/cer.py" afterPath="$PROJECT_DIR$/NMT-py/scripts/infer_scripts/cer.py" />
-    </list>
+    <list default="true" id="8f8c2877-7fe6-42fe-a976-ccac5a32e116" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -43,7 +39,7 @@
       <file leaf-file-name="bst_ckp.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/NMT-py/scripts/infer_scripts/bst_ckp.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-743">
+            <state relative-caret-position="-41">
               <caret line="3" column="0" lean-forward="true" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
@@ -558,7 +554,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/NMT-py/scripts/infer_scripts/bst_ckp.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-743">
+        <state relative-caret-position="-41">
           <caret line="3" column="0" lean-forward="true" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />

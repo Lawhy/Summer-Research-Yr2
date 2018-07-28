@@ -152,6 +152,7 @@ If you want to use the scripts described below, move your data to the correspond
  4. infer_scripts/err (In venv-py3 env)
  5. infer_scripts/wer.py (In venv-py3 env)
  6. infer_scripts/cer.py (In venv-py3 env)
+ 7. infer_scripts/bst_ckp.py (In venv-py3 env)
 
 #### Usage:
  1. ez_training_script 

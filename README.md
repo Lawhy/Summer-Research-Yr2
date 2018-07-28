@@ -189,6 +189,10 @@ bash ez_training_script ch +- 15000 0.8 4 7 9 12
  main_dir=/disk/ocean/lhe/transliteration/nmt-py
  cd $main_dir/models/ch/m+-/2
  bash err ch 15000 2
+ # Results printed
+ Best checkpoint: 12000
+ WER: 0.29841
+ CER: 0.12239
  cat wer.txt # to see WER results
  cat cer-clean.txt # to see CER results
  ```

@@ -236,6 +236,7 @@ def feature_vector_all(src, src_fv_type, tgt, tgt_fv_type):
     for title in ['tra', 'dev', 'tst']:
         feature_vector(src + '_' + title + '.txt', src_features, src_fv_type)
         if tgt == 'ch':
+            print('Target language is Chinese, enable IPA feaures.')
             feature_vector(tgt + '_' + title + '.txt', tgt_features, tgt_fv_type, ipa_feature=True)
         else:
             feature_vector(tgt + '_' + title + '.txt', tgt_features, tgt_fv_type)

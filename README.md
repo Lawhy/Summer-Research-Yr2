@@ -39,7 +39,7 @@ git clone https://github.com/OpenNMT/OpenNMT-py
 cd OpenNMT-py
 pip install -r requirements.txt
 ```
-##### 6. Create a python3 virtual environment and install the [script](https://github.com/belambert/asr-evaluation) for checking character error rate
+##### 6. Create a python3 virtual environment and install the [script](https://github.com/belambert/asr-evaluation) for checking character error rate. If you want to use the scripts in the Data Clustering section, you also need to install scikit-learn package.
 ---
 ### Data Clustering
 #### Prerequisites: 

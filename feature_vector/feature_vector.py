@@ -175,6 +175,7 @@ def feature_vector_word(ori_word, feaures_dict, fv_type, ipa_chars):
             row.append(word[i])
             row.append(ori_word)
             rows.append(row)
+            print(word[i] + 'of' + ori_word)
     assert len(rows) == len(word)-2
     return rows
 

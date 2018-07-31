@@ -1,12 +1,10 @@
 import csv
 import re
 import numpy as np
-import time
 import os
-import random
 import itertools
 import sys
-
+from scipy import sparse
 # loading the names of classes for data alignment check (better visualisation)
 eng_cls = ['^', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n',
            'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '\'', '$']
@@ -57,52 +55,30 @@ def feature_vector(filename, classes, fv_type="LR", ipa_feature=False):
     cl_names = features_dict[fv_type] + []  # [] prevents reference conflict
 
     ipa_chars = []  # initialize ipa data as an empty list
-
     if ipa_feature:
         print('Enable IPA features!')
         ipa = load_ipa()  # where needed to be changed if there is another IPA table
         ipa_cls = ipa['flattened_classes']
         ipa_chars = ipa['ordered_contents']
+        cl_names += ipa_cls
 
     with open(filename, 'r', encoding='UTF-8-sig') as data:
         dictionary = [word.replace('\n', '').replace(' ', '') for word in data.readlines()]
         print(str(len(dictionary)) + ' data are loaded!')
         print('The first three data are: ' + str(dictionary[0:3]))
 
-    with open(filename[:len(filename)-4] + '_fvs.csv', 'w+', encoding='UTF-8', newline='') as output:
-        total = 0
-        writer = csv.writer(output)
-        if ipa_feature:
-            cl_names += ipa_cls
-            cl_names += ipa_cls
-        cl_names.append('Char')
-        cl_names.append('Word')
-        writer.writerow(cl_names)
-        lst = []  #
-        pre = ""  #
-        # random.shuffle(dictionary)
-        for word in dictionary:
-            # Test for consecutive duplicates
-            # if word == pre and pre != "":
-            #     new = ""
-            #     for char in word:
-            #         new += " " + char
-            #     print(new)
-            #     lst.append(new)
-            # pre = word
-
-            count = 0
-            feature_vectors = feature_vector_word(word, features_dict, fv_type, ipa_chars)
-            assert len(feature_vectors) == len(word)
-            # print(feature_vectors)
-            for vec in feature_vectors:
-                writer.writerow(vec)
-                total += 1
-                count += 1
-            assert count == len(word)
-            # print(temp)
-            # print('There are ' + str(count) + ' characters in the word: ' + word)
-        print('Number of feature vectors generated: ' + str(total))
+    # Store the fvs into a sparse matrix
+    spa_matrix = []
+    for word in dictionary:
+        feature_vectors = feature_vector_word(word, features_dict, fv_type, ipa_chars)
+        fvs = feature_vectors
+        assert len(fvs) == len(word)
+        spa_matrix += fvs
+    spa_matrix = sparse.vstack(spa_matrix)
+    sparse.save_npz(filename[:len(filename)-4] + '_fvs', spa_matrix)
+    print('Shape of features matrix generated: ' + str(spa_matrix.shape))
+    print('Number of classes ' + str(len(cl_names)))
+    assert spa_matrix.shape[1] == len(cl_names)
 
 
 # uni-gram feature_vector generator for both Chinese and English
@@ -172,10 +148,9 @@ def feature_vector_word(ori_word, feaures_dict, fv_type, ipa_chars):
             else:
                 # assert sum(row) == 2
                 pass
-            row.append(word[i])
-            row.append(ori_word)
+            row = sparse.csr_matrix(np.array(row))
             rows.append(row)
-            print(word[i] + 'of' + ori_word)
+            print(word[i] + ' of ' + ori_word)
     assert len(rows) == len(word)-2
     return rows
 
@@ -250,7 +225,7 @@ if __name__ == "__main__":
     data_dir = input("Please enter the directory where the required original data files exist\n--->  ")
     os.chdir(data_dir)
 
-    print("The arguments format is: src_language, src_features_type, tgt_language, tgt_features_type")
+    print("The arguments format is: flag, src_language, src_features_type, tgt_language, tgt_features_type")
     feature_vector_all(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
 
 

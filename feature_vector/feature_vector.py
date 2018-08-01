@@ -60,7 +60,7 @@ def feature_vector(filename, classes, fv_type="LR", ipa_feature=False):
         ipa = load_ipa()  # where needed to be changed if there is another IPA table
         ipa_cls = ipa['flattened_classes']
         ipa_chars = ipa['ordered_contents']
-        cl_names += ipa_cls
+        cl_names += ipa_cls + ipa_cls
 
     with open(filename, 'r', encoding='UTF-8-sig') as data:
         dictionary = [word.replace('\n', '').replace(' ', '') for word in data.readlines()]
@@ -105,17 +105,17 @@ def feature_vector_word(ori_word, feaures_dict, fv_type, ipa_chars):
             # Check left unigram
             left_unigram = word[i-1]
             left = cl_left == left_unigram
-            left = [int(boolean) for boolean in left.tolist()[0]]
+            left = [int(boolean) for boolean in left.tolist()[0]]  # change logical matrix to numerical list
 
             # Check right unigram
             right_unigram = word[i+1]
             right = cl_right == right_unigram
-            right = [int(boolean) for boolean in right.tolist()[0]]
+            right = [int(boolean) for boolean in right.tolist()[0]]  # change logical matrix to numerical list
 
             # Check left_right bigram
             lr_bigram = left_unigram + right_unigram
             lr = cl_blr == lr_bigram
-            lr = [int(boolean) for boolean in lr.tolist()[0]]
+            lr = [int(boolean) for boolean in lr.tolist()[0]]  # change logical matrix to numerical list
 
             # form a single feature vector
             row_dict = {
@@ -132,23 +132,28 @@ def feature_vector_word(ori_word, feaures_dict, fv_type, ipa_chars):
             if 1 not in right:
                 print(right_unigram + ' is an unknown character in the training dataset.')
 
+            # The IPA features used here are of the form [Left_char_IPA; Right_char_IPA]
             if not ipa_chars == []:
                 num_ipa_classes = len(ipa_chars)
                 left_ipa = [0] * num_ipa_classes
                 right_ipa = [0] * num_ipa_classes
                 for j in range(num_ipa_classes):
                     options = ipa_chars[j]
-                    if left_unigram in options:
+                    if left_unigram in options:  # If the left char is in the IPA cell
                         left_ipa[j] = 1
                         # print(str(i) + ' left IPA is ' + str(ipa_cls[j]))
-                    if right_unigram in options:
+                    if right_unigram in options:  # If the right char is in the IPA cell
                         right_ipa[j] = 1
                         # print(str(i) + ' right IPA is ' + str(ipa_cls[j]))
                 row = row + left_ipa + right_ipa
             else:
                 # assert sum(row) == 2
                 pass
+
+            # save the feature vector in a sparse manner (save memory)
+            # also, csr_matrix supports fancy indexing, so easier smoothing
             row = sparse.csr_matrix(np.array(row))
+
             rows.append(row)
             print(word[i] + ' of ' + ori_word)
     assert len(rows) == len(word)-2

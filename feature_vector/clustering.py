@@ -17,8 +17,8 @@ def load_fv(lan, tra_or_dev_or_tst):
 
     for line in lines:
         word = line.replace(' ', '').replace('\n', '')
-        ordered_word.append(word)
         for char in word:
+            ordered_word.append(word)
             ordered_char.append(char)
 
     fvs = sparse.load_npz(lan + '_' + tra_or_dev_or_tst + '_fvs.npz')
@@ -136,7 +136,7 @@ def clustering(lan, n_clusters, smooth=False, threshold=3, delimiter=u'￨', alg
         # print(len(set(words)))
 
         # load the original data for word alignment (prevent consecutive duplicates)
-        with open("./bs/" + lan + '_' + title + '.txt', 'r', encoding='UTF-8-sig') as data:
+        with open(lan + '_' + title + '.txt', 'r', encoding='UTF-8-sig') as data:
             dictionary = [word.replace('\n', '').replace(' ', '') for word in data.readlines()]
 
         with open(lan + '_' + title + '_' + str(n_clusters) + 'cls.txt', 'w+', encoding='UTF-8') as output:

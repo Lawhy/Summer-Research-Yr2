@@ -6,3 +6,5 @@ Chinese_eva: 18563
 Chinese_tst: 18753
 English_eva: 39726
 English_tst: 39962
+
+IPA features: 408

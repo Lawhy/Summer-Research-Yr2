@@ -60,7 +60,7 @@ def feature_vector(filename, classes, fv_type="LR", ipa_feature=False):
         ipa = load_ipa()  # where needed to be changed if there is another IPA table
         ipa_cls = ipa['flattened_classes']
         ipa_chars = ipa['ordered_contents']
-        cl_names += ipa_cls
+        cl_names += ipa_cls + ipa_cls
 
     with open(filename, 'r', encoding='UTF-8-sig') as data:
         dictionary = [word.replace('\n', '').replace(' ', '') for word in data.readlines()]

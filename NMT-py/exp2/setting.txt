@@ -1,0 +1,6 @@
+{  LSTM encoder/decoder
+   2-layers, 
+   500 hidden units,
+   clusters: 4 7 9 12,
+   K-means , 
+   [left_unigram ; right_unigram ; IPA (for Chinese only) ] }

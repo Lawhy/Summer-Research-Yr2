@@ -1,0 +1,7 @@
+{  biLSTM encoder
+   LSTM decoder
+   2-layers, 
+   500 hidden units,
+   clusters: 2 4 5 7 9 10 12 15,
+   K-means , 
+   [left_unigram ; right_unigram ; left_rigt_bigram ; IPA (for Chinese only) ] }

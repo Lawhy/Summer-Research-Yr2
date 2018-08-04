@@ -46,7 +46,7 @@ do
         model[$c]="$ckp"
     done
 
-    echo "Repeat: Best checkpoint_setps in $ann are:"
+    echo "Repeat: Best checkpoint_steps in $ann are:"
     for c in ${clusters[*]} 
     do     
         echo "$c : ${model[$c]}"

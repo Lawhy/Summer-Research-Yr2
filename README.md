@@ -253,6 +253,7 @@ python PATH_FOR_OpenNMT/OpenNMT-py/train.py
 -keep_checkpoint 10
 -decay_steps 1000
 -learning_rate 0.8
+-encoder_type brnn # the decoder type only has rnn
 -gpuid 1
 -log_file logs/DEMO.log # Save the training details
 ```

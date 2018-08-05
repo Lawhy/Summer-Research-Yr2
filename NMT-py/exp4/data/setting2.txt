@@ -1,1 +1,0 @@
-featur_vector_type: [L_unigram ; R_unigram]

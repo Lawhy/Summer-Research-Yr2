@@ -169,9 +169,7 @@ bash ez_training_script ch +- 15000 0.8 4 7 9 12
  ```bash
  # A script that takes ez_training_script into a for-loop
  # activate pytorch
- nano all_in
- # change the parameters you want
- bash all_in
+ bash all_in ch ar jp he # arguments are language options {ar ch he jp}
  ```
  3. infer_scripts/err
  ```bash

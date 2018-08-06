@@ -22,8 +22,8 @@ In m+-, there are {2 5 10 15}, four sub-directories
 In each of them, there are {data infer}, two sub-directories
 Script copies correspongding data from $main_dir/data to the {data}
 Script runs preprocess.py train.py and translate.py of OpenNMT-py, the translation results of development set are saved in {infer}
-
-Please manually copy the inference scripts {wer.py cer.py err} from the Scripts directory to {infer} and run err in python3 environment
+Script copies the inference scripts from the Scripts directory to {infer}.
+Please run err in python3 environment and record the results.
 The generated wer.txt and cer-clean.txt can tell the results 
 
 
@@ -139,7 +139,7 @@ fi
 
 if [ $ann != "bs" ]
 then
- mkdir $main_dir/models/$lan/"m$ann"
+ mkdir -p $main_dir/models/$lan/"m$ann"
  # Create necessary directories
  for i in ${clusters[*]}
  do

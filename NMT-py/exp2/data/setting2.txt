@@ -1,0 +1,3 @@
+featur_vector_type: [L_unigram ; R_unigram]
+clusters: 4 7 9 12
+

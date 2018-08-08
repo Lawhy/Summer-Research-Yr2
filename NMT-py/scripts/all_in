@@ -4,7 +4,7 @@ echo "ALL IN!"
 # Main tune clusters
 # and fvs (outside)
 lans=() # Include any language you want from {ch jp he ar}
-anns=(-+ +- ++ bs) #Baseline no need as already created
+anns=(-+ +- ++ bs) #bs can be removed if a baseline has already been constructed
 
 for l in "$@" 
 do 

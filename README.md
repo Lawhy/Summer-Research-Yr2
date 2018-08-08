@@ -62,7 +62,7 @@ feature_vector/feature_vector.py
 ```
 - Function: 
 ```
-Generate all the feature vecotors based on the training data's features in .csv format
+Generate all the feature vecotors based on the training data's features, store them in a csr matrix.
 ```
 - Required: 
 ```

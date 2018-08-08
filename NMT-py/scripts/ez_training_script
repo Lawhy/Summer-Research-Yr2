@@ -4,11 +4,12 @@ set -e
 <<'COMMENT'
 This script enables easy running of preprocess-to-train-to-translate process
 
-It takse the following arguments: {lan, ann, t_steps, l_rate} where
+It takse the following arguments: {lan, ann, t_steps, l_rate, e_type} where
 $lan is the language you want to train on {ar jp he ch}
 $ann is the annotation class you choose {bs -+ +- ++}
 $t_steps is the training steps you want to set, for en2ch 12500-13500 is enough.
 $l_rate is the intial learning rate
+$e_type is the encoder type
 
 The default working directory is: $main_dir/models
 So each time when you have a new setting to train on, you should archive the old one (by changing its name)
@@ -22,8 +23,9 @@ In m+-, there are {2 5 10 15}, four sub-directories
 In each of them, there are {data infer}, two sub-directories
 Script copies correspongding data from $main_dir/data to the {data}
 Script runs preprocess.py train.py and translate.py of OpenNMT-py, the translation results of development set are saved in {infer}
+Script copies the inference scripts from the Scripts directory to {infer}.
+Please run bash err in python3 environment
 
-Please manually copy the inference scripts {wer.py cer.py err} from the Scripts directory to {infer} and run err in python3 environment
 The generated wer.txt and cer-clean.txt can tell the results 
 
 

@@ -2,10 +2,9 @@
 set -e
 # Must be used in the infer directory
 
-
 lan=$1
-shift
-echo "Language: $lan"
+shift 
+echo "language: $lan"
 
 t_steps=$1
 shift
@@ -14,7 +13,7 @@ echo "Training steps: $t_steps"
 let i=t_steps-900
 cls=$1
 shift
-echo "Cluster: $cls"
+echo "Clusters: $cls"
 
 main_dir=/disk/ocean/lhe/transliteration/nmt-py #The same main dir as in the ez-training script
 
@@ -57,3 +56,4 @@ done
 
 python cer.py $t_steps
 
+python bst_ckp.py wer.txt cer-clean.txt

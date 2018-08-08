@@ -24,7 +24,7 @@ def bst_ckp(wer, cer):
     for i in range(0, len(cers), 2):
         cer = re.findall(pa_cer, cers[i])
         assert cer != []
-        cer = float(cer[0])/100
+        cer = round(float(cer[0])/100, 5)
         crs.append(cer)
 
     assert len(t_steps) == 10

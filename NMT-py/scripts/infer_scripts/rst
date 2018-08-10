@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+set -e
+
+# Generate WER/CER for the test results
+
+main_dir=/disk/ocean/lhe/transliteration/nmt-py
+
+lan=$1
+shift
+echo "Language: $lan"
+
+tgt=$lan
+if [ $lan = "ar" ]
+then
+    tgt="en"
+fi
+
+ann=$1
+shift
+echo "Ann: $ann"
+
+cls=$1
+shift
+echo "Cluster: $cls"
+_tst="_tst"
+
+python wer.py $cls$_tst* $tgt$_tst.txt  
+wer $tgt$_tst.txt original_$cls$_tst*
+
+cp -r *$cls$_tst* $main_dir/best_results/$lan/$ann

@@ -2,9 +2,11 @@
 set -e
 # Must be used in the infer directory
 
-lan=$1
+src=$1
 shift 
-echo "language: $lan"
+tgt=$1
+shift
+echo "Direction $src -> $tgt"
 
 t_steps=$1
 shift
@@ -23,25 +25,16 @@ _dev="_dev"
 _tst="_tst"
 
 # copy the target dev/tst files to the infer directory
-if [ $lan != "ar" ]
-then
-   cp $main_dir/data/$lan/bs/$lan$_dev.txt .
-   cp $main_dir/data/$lan/bs/$lan$_tst.txt .
-fi
-
-if [ $lan = "ar" ]
-then
-   cp $main_dir/data/$lan/bs/en_dev.txt .
-   cp $main_dir/data/$lan/bs/en_tst.txt .
-   lan=en
-fi
+cp $main_dir/data/$lan/bs/$tgt$_dev.txt .
+cp $main_dir/data/$lan/bs/$tgt$_tst.txt .
+   
 
 # -----WER-------  
 # (In python3 venv)
 
 while [ $i -le $t_steps ]
 do 
-  python wer.py $cls$_dev_$i.txt $lan$_dev.txt >> wer.txt 
+  python wer.py $cls$_dev_$i.txt $tgt$_dev.txt >> wer.txt 
   echo $i >> wer.txt
   let i+=100
 done  
@@ -49,7 +42,7 @@ done
 let i=t_steps-900  
 while [ $i -le $t_steps ]
 do
-   wer $lan$_dev.txt original_$cls$_dev_$i.txt >> cer.txt
+   wer $tgt$_dev.txt original_$cls$_dev_$i.txt >> cer.txt
    echo $i >> cer.txt
    let i+=100
 done

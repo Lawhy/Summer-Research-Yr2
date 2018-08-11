@@ -9,11 +9,9 @@ lan=$1
 shift
 echo "Language: $lan"
 
-tgt=$lan
-if [ $lan = "ar" ]
-then
-    tgt="en"
-fi
+tgt=$1
+shift
+echo "Target language: $tgt"
 
 ann=$1
 shift

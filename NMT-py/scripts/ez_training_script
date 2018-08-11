@@ -4,12 +4,13 @@ set -e
 <<'COMMENT'
 This script enables easy running of preprocess-to-train-to-translate process
 
-It takse the following arguments: {lan, ann, t_steps, l_rate, e_type} where
-$lan is the language you want to train on {ar jp he ch}
+It takse the following arguments: {lan, ann, t_steps, l_rate} where
+$lan is the language you want to train on vs English
 $ann is the annotation class you choose {bs -+ +- ++}
 $t_steps is the training steps you want to set, for en2ch 12500-13500 is enough.
 $l_rate is the intial learning rate
-$e_type is the encoder type
+$src specify source language
+$tgt specify target language
 
 The default working directory is: $main_dir/models
 So each time when you have a new setting to train on, you should archive the old one (by changing its name)
@@ -23,9 +24,8 @@ In m+-, there are {2 5 10 15}, four sub-directories
 In each of them, there are {data infer}, two sub-directories
 Script copies correspongding data from $main_dir/data to the {data}
 Script runs preprocess.py train.py and translate.py of OpenNMT-py, the translation results of development set are saved in {infer}
-Script copies the inference scripts from the Scripts directory to {infer}.
-Please run bash err in python3 environment
 
+Please manually copy the inference scripts {wer.py cer.py err} from the Scripts directory to {infer} and run err in python3 environment
 The generated wer.txt and cer-clean.txt can tell the results 
 
 
@@ -43,9 +43,7 @@ main_dir=/disk/ocean/lhe/transliteration/nmt-py # Change this to your working di
                                                 # OpenNMT and data must be included in this directory
 # 1st argument: language
 lan=$1
-echo "choose $lan from {ar ch he jp}"
-cd $main_dir/data/$lan/
-cat direction.txt
+echo "choose $lan against English"
 shift
 
 # 2nd argument model
@@ -66,8 +64,15 @@ shift
 # 5th argument encoder type
 e_type=$1
 echo "Encoder type: $e_type"
-echo "Decoder type: rnn (default LSTM)"
+echo "Decoder type: LSTM"
 shift
+
+# 6th and 7th arguments are src and tgt
+src=$1
+shift
+tgt=$1
+shift
+echo "Direction $src -> $tgt"
 
 # The rest of arguments are clusters
 clusters=()
@@ -84,16 +89,6 @@ mkdir -p $main_dir/models/$lan
 mkdir -p $main_dir/models/logs
 mkdir -p $main_dir/models/logs/$lan
 
-
-# Assign source and target languages
-src="en"
-tgt=$lan
-
-if [ $lan = "ar" ]
-then
- src=$lan
- tgt="en"
-fi
 
 tra="_tra"
 dev="_dev"
@@ -140,7 +135,7 @@ then
   -output infer/bs_dev_$j.txt \
   -replace_unk \
   -verbose \
-  -gpu 1
+  -gpu 2
  done
  echo "Finish!"
  cp -r /disk/ocean/lhe/transliteration/nmt-py/scripts/infer_scripts/* infer
@@ -197,7 +192,7 @@ then
    -decay_steps 1000 \
    -learning_rate $l_rate \
    -encoder_type $e_type \
-   -gpuid 2 \
+   -gpuid 1 \
    -log_file $main_dir/models/logs/$lan/$i$ann.log 
    # --- Infer ---
    let start=$t_steps-900
@@ -212,7 +207,7 @@ then
      -output infer/$i$development$j.txt \
      -replace_unk \
      -verbose \
-     -gpu 1;
+     -gpu 2;
    done
    # Copy the infer scripts to the infer directory
    cp -r /disk/ocean/lhe/transliteration/nmt-py/scripts/infer_scripts/* infer

@@ -3,24 +3,18 @@ set -e
 echo "ALL IN!"
 # Main tune clusters
 # and fvs (outside)
-lans=() # Include any language you want from {ch jp he ar}
-anns=(-+ +- ++ bs) #bs can be removed if a baseline has already been constructed
+anns=(bs -+ +- ++) #Baseline no need as already created
 
-for l in "$@" 
-do 
-    lans+=("$l") 
-done 
-echo "Languages are: ${lans[*]}"
+lan=$1
+shift
+src=$1
+shift
+tgt=$1
+shift
 
-for lan in ${lans[*]}
-do
-    for ann in ${anns[*]}
-    do  
-        t_steps=15000
-        if [ $lan = 'he' ]
-        then
-            t_steps=5000
-        fi
-        bash ez_training_script $lan $ann $t_steps 0.8 brnn 2 4 5 7 9 10 12 15
-    done
+for ann in ${anns[*]}
+do  
+    t_steps=2000
+    bash ez_training_script $lan $ann $t_steps 0.8 brnn $src $tgt 2 4 5 7 9 10 12 15
 done
+

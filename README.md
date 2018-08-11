@@ -77,6 +77,8 @@ A directory named bs that stores the formatted data files:
 #        "LR": [L_unigram ; R_unigram],
 #        "bLR": [LR_bigram],
 #        "LRbLR": [L_unigram ; R_unigram ; LR_bigram]
+#        "LL": [L_alt_unigram, L_unigram]
+#        "RR": [R_unigram, R_alt_unigram]
 #        }
 # additional IPA features: for Chinese data only.
 # e.g.
@@ -157,23 +159,23 @@ If you want to use the scripts described below, move your data to the correspond
 #### Usage:
  1. ez_training_script 
 ```bash
-# args = {$lan(language), $ann(annotation), $t_steps(training_steps), $lr(learning_rate), a sequence of $cluster_number}
+# args = {$lan(language), $ann(annotation), $t_steps(training_steps), $lr(learning_rate), $e_type(encoder_type), $src(source language), # $tgt(target language) a sequence of $cluster_number}
 # activate pytorch
 # A script that serializes the whole process including proprocess.py train.py and translate.py 
 # for a single annotation of one language 
-# $lan choices: {ar ch he jp} 
+# $lan: the name of data files 
 # $ann choices: {bs -+ +- ++} 
-bash ez_training_script ch +- 15000 0.8 4 7 9 12
+bash ez_training_script ch +- 15000 0.8 brnn en ch 2 4 5 7 9 10 12 15
 ```
  2. all_in
  ```bash
  # A script that takes ez_training_script into a for-loop
  # activate pytorch
- bash all_in ch ar jp he # arguments are language options {ar ch he jp}
+ bash all_in ch en ch # The first argument is always the name of the sub-directory of data, e.g. data/ch
  ```
  3. infer_scripts/err
  ```bash
- # args = {$lan(language), $t_steps(training_steps), $cls(current cluster number or bs)}
+ # args = {$src, $tgt, $t_steps(training_steps), $cls(current cluster number or bs)}
  # activate venv-py3
  # The ez_training_script will copy err, wer.py, cer.py to 
  # $main_dir/models/$lan/bs/infer and $main_dir/models/$lan/$ann/$cls/infer
@@ -181,7 +183,10 @@ bash ez_training_script ch +- 15000 0.8 4 7 9 12
  # e.g.
  main_dir=/disk/ocean/lhe/transliteration/nmt-py
  cd $main_dir/models/ch/bs
- bash err ch 15000 bs
+ bash err en ch 15000 bs
+ Best checkpoint: 15000
+ WER: 0.29841
+ CER: 0.12239
  cat wer.txt # to see WER results
  cat cer-clean.txt # to see CER results
  # e.g.
@@ -189,7 +194,7 @@ bash ez_training_script ch +- 15000 0.8 4 7 9 12
  cd $main_dir/models/ch/m+-/2
  bash err ch 15000 2
  # Results printed
- Best checkpoint: 12000
+ Best checkpoint: 15000
  WER: 0.29841
  CER: 0.12239
  cat wer.txt # to see WER results
@@ -197,12 +202,12 @@ bash ez_training_script ch +- 15000 0.8 4 7 9 12
  ```
  4. test_script
  ```bash
- # args = {$lan(language), a sequence of $cls (no need for bs))
+ # args = {$src, $tgt, a sequence of $cls (no need for bs))
  # A script that generates the predictions files for the test dataset using the best checkpoints 
  # You need to input the best checkpoints
  # activate pytorch
  # e.g.
- bash test_script ch 2 5 10 15
+ bash test_script en ch 2 5 10 15
  ...
  Best checkpoint_step for bs:
  12000 # If baseline results has been generated in the previous experiment, put -1 here

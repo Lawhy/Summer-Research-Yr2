@@ -5,9 +5,8 @@ import os
 import itertools
 import sys
 from scipy import sparse
-# loading the names of classes for data alignment check (better visualisation)
-eng_cls = ['^', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n',
-           'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '\'', '$']
+
+temp_count = 0
 
 
 # obtain features from well-formatted training data file
@@ -35,6 +34,8 @@ def feature_vector(filename, classes, fv_type="LR", ipa_feature=False):
         "LR": [L_unigram ; R_unigram],
         "bLR": [LR_bigram],
         "LRbLR": [L_unigram ; R_unigram ; LR_bigram]
+        "LL": [Left_two_unigrams]
+        "RR": [Right_two_unigrams]
         }
     :return: a csv file storing the feature vectors for every character in the input data file
     """
@@ -49,7 +50,9 @@ def feature_vector(filename, classes, fv_type="LR", ipa_feature=False):
         'R': cl_right,
         'LR': cl_left + cl_right,
         'bLR': cl_blr,
-        'LRbLR': cl_left + cl_right + cl_blr
+        'LRbLR': cl_left + cl_right + cl_blr,
+        'LL': cl_left + cl_left,
+        'RR': cl_right + cl_right
     }
 
     cl_names = features_dict[fv_type] + []  # [] prevents reference conflict
@@ -97,6 +100,7 @@ def feature_vector_word(ori_word, feaures_dict, fv_type, ipa_chars):
     cl_blr = np.asmatrix(cl_blr)
 
     word = '^' + ori_word + '$'  # add the ^ and $ as start end symbol
+
     rows = []
     for i in range(len(word)):
         if word[i] == '^' or word[i] == '$':
@@ -113,9 +117,27 @@ def feature_vector_word(ori_word, feaures_dict, fv_type, ipa_chars):
             right = [int(boolean) for boolean in right.tolist()[0]]  # change logical matrix to numerical list
 
             # Check left_right bigram
-            lr_bigram = left_unigram + right_unigram
+            lr_bigram = left_unigram + right_unigram  # e.g. word: abc, looking at b, it's ac.
             lr = cl_blr == lr_bigram
             lr = [int(boolean) for boolean in lr.tolist()[0]]  # change logical matrix to numerical list
+
+            # Check left_two_unigrams
+            if i == 1:  # Deal with the initial character (not ^)
+                assert left_unigram == '^'
+                left_alt_unigram = left_unigram  # add another ^ to deal with the marginal case
+            else:
+                left_alt_unigram = word[i-2]
+            left_alt = cl_left == left_alt_unigram
+            left_alt = [int(boolean) for boolean in left_alt.tolist()[0]]  # change logical matrix to numerical list
+
+            # Check right_two_unigrams
+            if i == len(word) - 2: # Deal with the last character (not $)
+                assert right_unigram == '$'
+                right_alt_unigram = right_unigram # add another $ to dea with the marginal case
+            else:
+                right_alt_unigram = word[i+2]
+            right_alt = cl_right == right_alt_unigram
+            right_alt = [int(boolean) for boolean in right_alt.tolist()[0]]  # change logical matrix to numerical list
 
             # form a single feature vector
             row_dict = {
@@ -123,7 +145,9 @@ def feature_vector_word(ori_word, feaures_dict, fv_type, ipa_chars):
                 "R": right,
                 "LR": left + right,
                 "bLR": lr,
-                "LRbLR": left + right + lr
+                "LRbLR": left + right + lr,
+                "LL": left_alt + left,
+                "RR": right + right_alt,
             }
             row = row_dict[fv_type]
 

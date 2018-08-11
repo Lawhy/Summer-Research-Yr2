@@ -4,20 +4,21 @@ set -e
 # Arguments: lan, sequence of clusters
 
 main_dir=/disk/ocean/lhe/transliteration/nmt-py
-# strings for necessary file names 
-src="en" 
+# strings for necessary file names  
 _tst="_tst" 
 _tst_="_tst_"
 step="_step_"
 
 lan=$1
-echo "Language: $lan"
+echo "Language file: $lan"
 shift
 
-if [ $lan = "ar" ]
-then
-   src="ar"
-fi
+src=$1
+shift
+tgt=$1
+shift
+echo "Direction $src -> $tgt"
+
 
 clusters=()
 for c in "$@"

@@ -99,8 +99,8 @@ Apply clustering on the training dataset, then predict clustering of the develop
 ```
 - Required: 
 ```
-a directory, say fvs_ch, that stores all the csv files generated from feature_vector.py, 
-along with a sub-directory bs that stores the original data files.
+a directory, say fvs_ch, that stores all the npt files generated from feature_vector.py, 
+along with the original data files.
 ```
 - Usage:
 ```bash

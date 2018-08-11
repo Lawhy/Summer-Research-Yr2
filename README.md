@@ -159,11 +159,11 @@ If you want to use the scripts described below, move your data to the correspond
 #### Usage:
  1. ez_training_script 
 ```bash
-# args = {$lan(language), $ann(annotation), $t_steps(training_steps), $lr(learning_rate), $e_type(encoder_type), $src(source language), # $tgt(target language) a sequence of $cluster_number}
+# args = {$lan(language), $ann(annotation), $t_steps(training_steps), $lr(learning_rate), $e_type(encoder_type), $src(source language), $tgt(target language), a sequence of $cluster_number}
 # activate pytorch
 # A script that serializes the whole process including proprocess.py train.py and translate.py 
 # for a single annotation of one language 
-# $lan: the name of data files 
+# $lan: the name of data directory, e.g. ch means all the Chinese data are stored in data/ch
 # $ann choices: {bs -+ +- ++} 
 bash ez_training_script ch +- 15000 0.8 brnn en ch 2 4 5 7 9 10 12 15
 ```

@@ -4,7 +4,7 @@ set -e
 <<'COMMENT'
 This script enables easy running of preprocess-to-train-to-translate process
 
-It takse the following arguments: {lan, ann, t_steps, l_rate} where
+It takse the following arguments:
 $lan is the language you want to train on vs English
 $ann is the annotation class you choose {bs -+ +- ++}
 $t_steps is the training steps you want to set, for en2ch 12500-13500 is enough.

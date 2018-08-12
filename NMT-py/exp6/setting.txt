@@ -1,0 +1,9 @@
+{   biLSTM encoder
+    LSTM decoder
+    2-layers,
+    500 hidden units,
+    clusters: 2 4 5 7 9 10 12 15,
+    K-means ,
+    [right_unigram; right_alt_unigram; IPA (for Chinese only) ] }
+
+This is a small experiment testing the right_two_unigrams feature vectors using only Chinese data.

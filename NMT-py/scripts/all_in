@@ -3,7 +3,7 @@ set -e
 echo "ALL IN!"
 # Main tune clusters
 # and fvs (outside)
-anns=(bs -+ +- ++) #Baseline no need as already created
+anns=(+- ++) #Baseline no need as already created
 
 lan=$1
 shift
@@ -14,7 +14,7 @@ shift
 
 for ann in ${anns[*]}
 do  
-    t_steps=2000
+    t_steps=15000
     bash ez_training_script $lan $ann $t_steps 0.8 brnn $src $tgt 2 4 5 7 9 10 12 15
 done
 

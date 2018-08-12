@@ -2,6 +2,11 @@
 set -e
 # Must be used in the infer directory
 
+# name of data files
+lan=$1
+shift
+
+# src and tgt languages
 src=$1
 shift 
 tgt=$1

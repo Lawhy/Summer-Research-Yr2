@@ -155,6 +155,7 @@ If you want to use the scripts described below, move your data to the correspond
  5. infer_scripts/wer.py (In venv-py3 env)
  6. infer_scripts/cer.py (In venv-py3 env)
  7. infer_scripts/bst_ckp.py (In venv-py3 env)
+ 8. infer_scripts/rst (In venv-py3 env)
 
 #### Usage:
  1. ez_training_script 
@@ -227,6 +228,17 @@ bash ez_training_script ch +- 15000 0.8 brnn en ch 2 5 10 15
  ... # Same
  ALL FINISH!
  ```
+ 5. rst 
+ ```bash
+ # After test_script finishes its job, cd to the infer directory of each model, use this script to see the test results
+ # args = {$lan $tgt $ann $cls)
+ # $lan specifies the name of directory storing the corresponding data, it is usually $lan vs. en
+ # $tgt means target language
+ # $ann from {m-+ m+- m++ bs}, it is for coping the results to the corresponding sub-directories of best_results
+ # $cls: just cluster number
+ bash rst ch ch m+- 2
+ ```
+ 
 
 ---
 ### Individual Commands

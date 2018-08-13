@@ -174,7 +174,7 @@ bash ez_training_script ch +- 15000 0.8 brnn en ch 2 5 10 15
  # activate pytorch
  bash all_in ch en ch # The first argument is always the name of the sub-directory of data, e.g. data/ch
  ```
- 3. infer_scripts/err
+ 3. err
  ```bash
  # args = {$src, $tgt, $t_steps(training_steps), $cls(current cluster number or bs)}
  # activate venv-py3

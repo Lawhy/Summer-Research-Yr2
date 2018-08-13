@@ -33,7 +33,7 @@ echo "Number of clusters: ${#clusters[*]}"
 echo "Best checkpoint_step for bs:"
 read bst
 
-anns=(m+- m++)
+anns=(m-+ m+- m++)
 # Read best checkpoints for annotated models
 for ann in ${anns[*]}
 do

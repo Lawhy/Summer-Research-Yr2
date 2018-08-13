@@ -43,7 +43,7 @@ main_dir=/disk/ocean/lhe/transliteration/nmt-py # Change this to your working di
                                                 # OpenNMT and data must be included in this directory
 # 1st argument: language
 lan=$1
-echo "choose $lan from {ar ch he jp}"
+echo "choose $lan against en"
 shift
 
 # 2nd argument model

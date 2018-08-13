@@ -1,0 +1,9 @@
+{ NET-transliteration
+  Direction: other-languages -> en
+  biLSTM encoder,
+  LSTM decoder,
+  2-layers
+  500 hidden units,
+  k-means
+  clusters: 2 5 7 10 12 15,
+  feature_vector: [L_unigram ; R_unigram] }  

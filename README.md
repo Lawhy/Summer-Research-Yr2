@@ -165,7 +165,7 @@ If you want to use the scripts described below, move your data to the correspond
 # for a single annotation of one language 
 # $lan: the name of data directory, e.g. ch means all the Chinese data are stored in data/ch
 # $ann choices: {bs -+ +- ++} 
-bash ez_training_script ch +- 15000 0.8 brnn en ch 2 4 5 7 9 10 12 15
+bash ez_training_script ch +- 15000 0.8 brnn en ch 2 5 10 15
 ```
  2. all_in
  ```bash
@@ -187,18 +187,18 @@ bash ez_training_script ch +- 15000 0.8 brnn en ch 2 4 5 7 9 10 12 15
  Best checkpoint: 15000
  WER: 0.29841
  CER: 0.12239
- cat wer.txt # to see WER results
- cat cer-clean.txt # to see CER results
+ cat wer.txt # to see all the WER results
+ cat cer-clean.txt # to see all the CER results
  # e.g.
  main_dir=/disk/ocean/lhe/transliteration/nmt-py
  cd $main_dir/models/ch/m+-/2
- bash err ch 15000 2
+ bash err en ch 15000 2
  # Results printed
  Best checkpoint: 15000
  WER: 0.29841
  CER: 0.12239
- cat wer.txt # to see WER results
- cat cer-clean.txt # to see CER results
+ cat wer.txt # to see all the WER results
+ cat cer-clean.txt # to see all the CER results
  ```
  4. test_script
  ```bash

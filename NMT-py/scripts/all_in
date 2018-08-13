@@ -14,7 +14,7 @@ shift
 
 for ann in ${anns[*]}
 do  
-    t_steps=40000
-    bash ez_training_script $lan $ann $t_steps 0.6 brnn $src $tgt 2 5 7 10 12 15
+    t_steps=15000 # It's your choice.
+    bash ez_training_script $lan $ann $t_steps 0.6 brnn $src $tgt 2 5 7 10 12 15  # choose clusters according to your data
 done
 

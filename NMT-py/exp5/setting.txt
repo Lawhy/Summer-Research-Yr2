@@ -3,7 +3,7 @@
     2-layers,
     500 hidden units,
     clusters: 2 4 5 7 9 10 12 15,
-    K-means ,
+    K-means,
     [left_alt_unigram; left_unigram; IPA (for Chinese only) ] }
 
 This is a small experiment testing the left_two_unigrams feature vectors using only Chinese data.

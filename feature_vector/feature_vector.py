@@ -34,8 +34,11 @@ def feature_vector(filename, classes, fv_type="LR", ipa_feature=False):
         "LR": [L_unigram ; R_unigram],
         "bLR": [LR_bigram],
         "LRbLR": [L_unigram ; R_unigram ; LR_bigram]
-        "LL": [Left_two_unigrams]
-        "RR": [Right_two_unigrams]
+        "LL": [L_alt_unigram ; L_unigram ]
+        "RR": [R_unigram ; R_alt_unigram]
+        "LLR": LL + R
+        "RRL": RR + L
+        "LL_RR_LR": LL + RR + LR
         }
     :return: a csv file storing the feature vectors for every character in the input data file
     """
@@ -52,7 +55,10 @@ def feature_vector(filename, classes, fv_type="LR", ipa_feature=False):
         'bLR': cl_blr,
         'LRbLR': cl_left + cl_right + cl_blr,
         'LL': cl_left + cl_left,
-        'RR': cl_right + cl_right
+        'RR': cl_right + cl_right,
+        "LLR": cl_left + cl_left + cl_right,
+        "RRL": cl_right + cl_right + cl_left,
+        "LL_RR_LR": cl_left + cl_left + cl_right + cl_right + cl_left + cl_right
     }
 
     cl_names = features_dict[fv_type] + []  # [] prevents reference conflict
@@ -148,6 +154,9 @@ def feature_vector_word(ori_word, feaures_dict, fv_type, ipa_chars):
                 "LRbLR": left + right + lr,
                 "LL": left_alt + left,
                 "RR": right + right_alt,
+                "LLR": left_alt + left + right,
+                "RRL": right + right_alt + left,
+                "LL_RR_LR":  left_alt + left + right + right_alt + left + right
             }
             row = row_dict[fv_type]
 

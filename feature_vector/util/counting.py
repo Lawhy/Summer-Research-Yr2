@@ -11,8 +11,9 @@ def count_vocab(filename):
     print("The size of vocab is: " + str(len(vocab)))
     return vocab
 
-chi = count_vocab('./data/en2chi_tra_chi.txt')
-chi_dev = count_vocab('./data/en2chi_dev_chi.txt')
+chi = count_vocab('ru_tra.txt')
+print(len(chi))
+chi_dev = count_vocab('ru_tst.txt')
 diff = 0
 for voc in chi_dev:
     if voc not in chi:

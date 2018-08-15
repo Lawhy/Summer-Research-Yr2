@@ -6,4 +6,4 @@
 5796 testing
 434 distinct Chinese characters in training dataset
 408 IPA features (before smoothing)
-
+434 + 14 distinct Chinese characters across all dataset

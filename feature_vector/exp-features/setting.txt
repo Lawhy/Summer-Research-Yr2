@@ -1,0 +1,29 @@
+This is an experiment testing several combinations of features including:
+{ 
+  --- Finished ---
+  LR: [left_unigram ; right_unigram] (done in exp4)
+  LR bLR: [left_unigram ; right_unigram ; left_right_bigram] (done in exp3)
+
+  --- Partially finished ---
+
+  LL: [left_alt_unigram ; left_unigram] (done in exp5 except for -+)
+  RR: [right_unigram ; right_alt_unigram] (done in exp6 except for -+)
+
+  --- New ---
+  L: [left_unigram]
+  R: [right_uingram]
+  LL R: [left_alt_unigram ; left_unigram ; right_unigram]
+  RR L: [rigt_unigram ; right_alt_unigram ; left_unigram]
+  LL RR LR: Just combination of above LL RR and LR
+}
+
+
+Parameters:
+{ biLSTM encoder,
+  LSTM decoder,
+  2 layers,
+  500 hidden units,
+  k-means,
+  clusters: 10
+}
+

@@ -2,7 +2,6 @@ This is an experiment testing several combinations of features including:
 { 
   --- Finished ---
   LR: [left_unigram ; right_unigram] (done in exp4)
-  LR bLR: [left_unigram ; right_unigram ; left_right_bigram] (done in exp3)
 
   --- Partially finished ---
 
@@ -10,6 +9,7 @@ This is an experiment testing several combinations of features including:
   RR: [right_unigram ; right_alt_unigram] (done in exp6 except for -+)
 
   --- New ---
+  LR bLR: [left_unigram ; right_unigram ; left_right_bigram]
   L: [left_unigram]
   R: [right_uingram]
   LL R: [left_alt_unigram ; left_unigram ; right_unigram]

@@ -79,6 +79,9 @@ A directory named bs that stores the formatted data files:
 #        "LRbLR": [L_unigram ; R_unigram ; LR_bigram]
 #        "LL": [L_alt_unigram, L_unigram]
 #        "RR": [R_unigram, R_alt_unigram]
+#        "LLR": LL + R
+#        "RRL": RR + L
+#        "LLRRLR": LL + RR + LR
 #        }
 # additional IPA features: for Chinese data only.
 # e.g.
@@ -86,6 +89,7 @@ python feature_vector.py en LR ch LR
 Please enter the directory where the required fvs files and original data files exist
 ---> data/ch/bs
 ```
+Note: If you want to add more features, let me know or you can directly modify the code. <br />
 
 #### Clustering: 
 
@@ -176,7 +180,7 @@ bash ez_training_script ch +- 15000 0.8 brnn en ch 2 5 10 15
  ```
  3. err
  ```bash
- # args = {$src, $tgt, $t_steps(training_steps), $cls(current cluster number or bs)}
+ # args = {$lan, $src, $tgt, $t_steps(training_steps), $cls(current cluster number or bs)}
  # activate venv-py3
  # The ez_training_script will copy err, wer.py, cer.py to 
  # $main_dir/models/$lan/bs/infer and $main_dir/models/$lan/$ann/$cls/infer
@@ -184,7 +188,7 @@ bash ez_training_script ch +- 15000 0.8 brnn en ch 2 5 10 15
  # e.g.
  main_dir=/disk/ocean/lhe/transliteration/nmt-py
  cd $main_dir/models/ch/bs
- bash err en ch 15000 bs
+ bash err ch en ch 15000 bs
  Best checkpoint: 15000
  WER: 0.29841
  CER: 0.12239
@@ -193,7 +197,7 @@ bash ez_training_script ch +- 15000 0.8 brnn en ch 2 5 10 15
  # e.g.
  main_dir=/disk/ocean/lhe/transliteration/nmt-py
  cd $main_dir/models/ch/m+-/2
- bash err en ch 15000 2
+ bash err ch en ch 15000 2
  # Results printed
  Best checkpoint: 15000
  WER: 0.29841
@@ -203,12 +207,12 @@ bash ez_training_script ch +- 15000 0.8 brnn en ch 2 5 10 15
  ```
  4. test_script
  ```bash
- # args = {$src, $tgt, a sequence of $cls (no need for bs))
+ # args = {$lan, $src, $tgt, a sequence of $cls (no need for bs))
  # A script that generates the predictions files for the test dataset using the best checkpoints 
  # You need to input the best checkpoints
  # activate pytorch
  # e.g.
- bash test_script en ch 2 5 10 15
+ bash test_script ch en ch 2 5 10 15
  ...
  Best checkpoint_step for bs:
  12000 # If baseline results has been generated in the previous experiment, put -1 here
@@ -228,6 +232,7 @@ bash ez_training_script ch +- 15000 0.8 brnn en ch 2 5 10 15
  ... # Same
  ALL FINISH!
  ```
+ Note: If you want to only test one of the +-, -+, ++, please modify the value of ann in the script. <br />
  5. rst 
  ```bash
  # After test_script finishes its job, cd to the infer directory of each model, use this script to see the test results
